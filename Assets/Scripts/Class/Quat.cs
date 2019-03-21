@@ -253,6 +253,18 @@ public class Quat
             return ret;
         }
     }
+    public static MyVector3 QuatToEuler(Quat q)
+    {
+        MyVector3 RET = new MyVector3();
+        Matrix4B4 m = Matrix4B4.QuatToMatrix(q);
+        float sy = Mathf.Sqrt(m.values[0, 0] * m.values[0, 0] + m.values[1, 0] * m.values[1, 0]);
+
+        RET.x = Mathf.Atan2(m.values[2, 1], m.values[2,2]);
+        RET.y = Mathf.Atan2(-m.values[2, 0], sy);
+        RET.z = Mathf.Atan2(m.values[1, 0], m.values[0, 0]);
+        RET *= Mathf.Rad2Deg;
+        return RET;
+    }
     public static Quat EulerToQuat(MyVector3 EulerAngle)
     {
         //    Sample Retrevied from https://www.gamasutra.com/view/feature/131686/rotating_objects_using_quaternions.php?page=2

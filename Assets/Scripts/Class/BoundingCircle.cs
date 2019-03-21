@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class BoundingCircle :BoundingObject
 {
-    public MyVector3 CentrePoint;
+    public MyVector3 CentrePoint, Half;
     public float Radius;
 
 

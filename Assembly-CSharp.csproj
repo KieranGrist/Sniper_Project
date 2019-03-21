@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{F0D57774-9C86-4D04-C058-3E88D63FA421}</ProjectGuid>
+    <ProjectGuid>{A2F27619-F85A-3869-A7D9-5FC761FEB316}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Quattoeulertest.cs" />
     <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
     <Compile Include="Assets\Scripts\Bullet\myRigidBody.cs" />
     <Compile Include="Assets\Scripts\CamLock.cs" />
@@ -75,9 +76,11 @@
     <Compile Include="Assets\Scripts\Class\Quat.cs" />
     <Compile Include="Assets\Scripts\Class\VectorMaths.cs" />
     <Compile Include="Assets\Scripts\CollisionGrid.cs" />
+    <Compile Include="Assets\Scripts\Explosion.cs" />
     <Compile Include="Assets\Scripts\GridHandle.cs" />
     <Compile Include="Assets\Scripts\MyPhysics.cs" />
     <Compile Include="Assets\Scripts\myTransformation.cs" />
+    <Compile Include="Assets\Scripts\PhysicsControler.cs" />
     <Compile Include="Assets\Scripts\Player\Cluter.cs" />
     <Compile Include="Assets\Scripts\Player\Sniper.cs" />
     <Compile Include="Assets\Scripts\Target\TargetScript.cs" />
@@ -88,16 +91,16 @@
     <Compile Include="Assets\Scripts\UI\MassText.cs" />
     <Compile Include="Assets\Scripts\UI\TargetText.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper Project/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper_Project/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper_Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper Project/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper_Project/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper Project/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper_Project/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -277,7 +280,7 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Unity.Locator.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity.Settings">
-      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper Project/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
+      <HintPath>D:/814853/Sniper Project/Sniper Project/Sniper_Project/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

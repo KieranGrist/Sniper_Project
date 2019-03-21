@@ -18,6 +18,8 @@ public struct TransformationInit
 
 }
 
+
+
 //My transformation component to handle Positon, Rotation and Movement
 public class myTransformation : MonoBehaviour
 {
@@ -31,7 +33,22 @@ public class myTransformation : MonoBehaviour
     Matrix4B4 M;
     Quat QuatRotation;
     Matrix4B4 RotationMatrix;
-    public void Initialise (TransformationInit Values)
+    public Quat GetRotation()
+    {
+        MyVector3 RotationInRadians = new MyVector3();
+        RotationInRadians.x = VectorMaths.Deg2Rad(Rotation.x);
+        RotationInRadians.y = VectorMaths.Deg2Rad(Rotation.y);
+        RotationInRadians.z = VectorMaths.Deg2Rad(Rotation.z);
+        QuatRotation = Quat.EulerToQuat(RotationInRadians);
+        return QuatRotation;
+    }
+    public void SetRotation(Quat LHS)
+    {
+        Rotation = Quat.QuatToEuler(LHS);
+
+    }
+
+        public void Initialise (TransformationInit Values)
     {
         Translation = Values.Translation;
         Rotation = Values.Rotation;

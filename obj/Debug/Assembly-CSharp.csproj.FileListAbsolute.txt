@@ -682,3 +682,7 @@ D:\814853\Sniper Project\Sniper Project\Sniper Project\obj\Debug\Assembly-CSharp
 D:\814853\Sniper Project\Sniper Project\Sniper Project\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\814853\Sniper Project\Sniper Project\Sniper Project\obj\Debug\Assembly-CSharp.dll
 D:\814853\Sniper Project\Sniper Project\Sniper Project\obj\Debug\Assembly-CSharp.pdb
+D:\814853\Sniper Project\Sniper Project\Sniper_Project\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+D:\814853\Sniper Project\Sniper Project\Sniper_Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+D:\814853\Sniper Project\Sniper Project\Sniper_Project\obj\Debug\Assembly-CSharp.dll
+D:\814853\Sniper Project\Sniper Project\Sniper_Project\obj\Debug\Assembly-CSharp.pdb

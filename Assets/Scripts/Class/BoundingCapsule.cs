@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class BoundingCapsule :BoundingObject
 {
-    public MyVector3 A;
-    public MyVector3 B;
+    public MyVector3 A,B, Center, Half;
+
     public float Radius;
     public BoundingCapsule(MyVector3 A, MyVector3 B, float Radius)
     {

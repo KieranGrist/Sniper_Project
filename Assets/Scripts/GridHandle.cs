@@ -23,8 +23,6 @@ public class GridHandle : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        myPhysics.Clear();
-        myPhysics.AddRange(MyPhysics.FindObjectsOfType<MyPhysics>());
 
         float PocketsNeeded = 25000;
         if (PocketsNeeded != PocketLast)
