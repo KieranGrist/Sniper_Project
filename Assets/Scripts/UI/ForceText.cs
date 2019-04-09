@@ -16,6 +16,6 @@ public class ForceText : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        text.text = "Firing Speed : " + Player.FireSpeed;
+     //   text.text = "Firing Speed : " + Player.FireSpeed;
     }
 }

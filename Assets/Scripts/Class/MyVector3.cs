@@ -176,7 +176,7 @@ public class MyVector3
         return DivideVectors(LHS, RHS);
     }
 
-    public static bool operator !=(MyVector3 LHS, MyVector3 RHS)
+    public static bool operator != (MyVector3 LHS, MyVector3 RHS)
     {
         if (LHS.x != RHS.x || LHS.y != RHS.y|| LHS.z != RHS.z)
         {

@@ -11,14 +11,11 @@ class Test : System.Object
 
 public struct TransformationInit
 {
-    public float Head, Feat;
     public MyVector3 Translation;
     public MyVector3 Rotation;
     public MyVector3 Scale;
 
 }
-
-
 
 //My transformation component to handle Positon, Rotation and Movement
 public class myTransformation : MonoBehaviour
@@ -29,26 +26,11 @@ public class myTransformation : MonoBehaviour
     public MyVector3 Translation;
     public MyVector3 Rotation;
     public MyVector3 Scale;
-
+    public MyVector3 ModelMinExtent, ModelMaxExtent;
     Matrix4B4 M;
     Quat QuatRotation;
     Matrix4B4 RotationMatrix;
-    public Quat GetRotation()
-    {
-        MyVector3 RotationInRadians = new MyVector3();
-        RotationInRadians.x = VectorMaths.Deg2Rad(Rotation.x);
-        RotationInRadians.y = VectorMaths.Deg2Rad(Rotation.y);
-        RotationInRadians.z = VectorMaths.Deg2Rad(Rotation.z);
-        QuatRotation = Quat.EulerToQuat(RotationInRadians);
-        return QuatRotation;
-    }
-    public void SetRotation(Quat LHS)
-    {
-        Rotation = Quat.QuatToEuler(LHS);
-
-    }
-
-        public void Initialise (TransformationInit Values)
+    public void Initialise (TransformationInit Values)
     {
         Translation = Values.Translation;
         Rotation = Values.Rotation;
@@ -67,34 +49,36 @@ public class myTransformation : MonoBehaviour
         this.Scale = scale;
         this.Rotation=rotation;
     }
-    //public myTransformation(MyVector3 Position, MyVector3 scale, Quat rotation)
-    //{
-    //    this.Translation = Position;
-    //    this.Scale = scale;
-    //    this.Rotation = rotation;
-    //}
-
 
     void Start()
     {
-      
- 
-       
+        BoundObject = new AABB(new MyVector3(-1, -1, -1), new MyVector3(1, 1, 1));
+        ModelMinExtent = new MyVector3(10000, 10000, 10000);
+        ModelMaxExtent = new MyVector3(-10000, -10000, -10000);
+
         RotationMatrix = Matrix4B4.Identiy;
         MeshFilter MF = GetComponent<MeshFilter>();
         ModelSpaceVertices = MF.mesh.vertices;
      //   Scale = new MyVector3(1, 1, 1);
 
     }
-
+    public Quat GetRotation()
+    {
+        MyVector3 RotationInRadians = new MyVector3();
+        RotationInRadians.x = VectorMaths.Deg2Rad(Rotation.x);
+        RotationInRadians.y = VectorMaths.Deg2Rad(Rotation.y);
+        RotationInRadians.z = VectorMaths.Deg2Rad(Rotation.z);
+        QuatRotation = Quat.EulerToQuat(RotationInRadians);
+        return QuatRotation;
+    }
 
     // Update is called once per frame
-    void SetQuat(Vector4 lhs)
+    public void SetRotation(Quat LHS)
     {
-        QuatRotation.x = lhs.x;
+        Rotation = Quat.QuatToEuler(LHS);
 
-        //CONVERSION PROCESS
     }
+
     void Update () {
         Vector3[] TransformedVertices = new Vector3[ModelSpaceVertices.Length];
         //Scale
@@ -122,6 +106,35 @@ public class myTransformation : MonoBehaviour
         for (int i = 0; i < TransformedVertices.Length; i++)
         {
             TransformedVertices[i] = M * ModelSpaceVertices[i];
+        }
+        for (int i =0; i < ModelSpaceVertices.Length; i++)
+        {
+            if (ModelSpaceVertices[i].x <ModelMinExtent.x )
+            {
+                ModelMinExtent.x = ModelSpaceVertices[i].x;
+            }
+            if (ModelSpaceVertices[i].y < ModelMinExtent.y)
+            {
+                ModelMinExtent.y = ModelSpaceVertices[i].y;
+            }
+            if (ModelSpaceVertices[i].z < ModelMinExtent.z)
+            {
+                ModelMinExtent.z = ModelSpaceVertices[i].z;
+            }
+
+
+            if (ModelSpaceVertices[i].x > ModelMaxExtent.x)
+            {
+                ModelMaxExtent.x = ModelSpaceVertices[i].x;
+            }
+            if (ModelSpaceVertices[i].y > ModelMaxExtent.y)
+            {
+                ModelMaxExtent.y = ModelSpaceVertices[i].y;
+            }
+            if (ModelSpaceVertices[i].z > ModelMaxExtent.z)
+            {
+                ModelMaxExtent.z = ModelSpaceVertices[i].z;
+            }
         }
        
         MeshFilter MF = GetComponent<MeshFilter>();

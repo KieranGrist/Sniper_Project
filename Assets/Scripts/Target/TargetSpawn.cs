@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class TargetSpawn : MonoBehaviour {
-    public List<GameObject> Targets = new List<GameObject>();
+     List<GameObject> Targets = new List<GameObject>();
     public GameObject cube;
     public float TargetDistance = 150, TargetMax = 10;
-    private float TargetMaxLast = 5, ResawnTimer;
+     float TargetMaxLast = 5, ResawnTimer;
     public Slider TargetMaxSlider, TargetDistanceSlider;
 
     public Sniper sniper;

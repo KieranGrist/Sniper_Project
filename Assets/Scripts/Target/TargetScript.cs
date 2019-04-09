@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class TargetScript : MonoBehaviour {
     
-    public MyVector3 Target = new MyVector3();
-    public float TargetScale =10;
-    public int TIMESCOMPLETE = 0;
+     MyVector3 Target = new MyVector3();
+     float TargetScale =10;
+     int TIMESCOMPLETE = 0;
     myTransformation Transformation;
-    public BoundingObject TarCol;
-   public float Speed = 1;
+     BoundingObject TarCol;
+    float Speed = 1;
     public bool Alive = true;
     public Sniper sniper;
-    public TargetSpawn TaretSpawner;
+   public TargetSpawn TaretSpawner;
     public myTransformation Floor;
     void Start()
     {
@@ -38,56 +38,56 @@ public class TargetScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < sniper.Bullets.Count; i++)
-        {
-            if (Transformation.BoundObject.Intersects(sniper.Bullets[i].Transformation.BoundObject))
-            {
-                Alive = false;
-                GameObject.Find("Sniper").GetComponent<Sniper>().Bullets[i].GetComponent<Bullet>().Alive = false;
-            }
-        }
+        //for (int i = 0; i < sniper.Bullets.Count; i++)
+        //{
+        //    if (Transformation.BoundObject.Intersects(sniper.Bullets[i].Transformation.BoundObject))
+        //    {
+        //        Alive = false;
+        //        GameObject.Find("Sniper").GetComponent<Sniper>().Bullets[i].GetComponent<Bullet>().Alive = false;
+        //    }
+        //}
 
 
 
     
-        TarCol = new AABB(new MyVector3(Target.x - TargetScale, Target.y - TargetScale, Target.z - TargetScale), new MyVector3(Target.x + TargetScale, Target.y + TargetScale, Target.z + TargetScale));
+        //TarCol = new AABB(new MyVector3(Target.x - TargetScale, Target.y - TargetScale, Target.z - TargetScale), new MyVector3(Target.x + TargetScale, Target.y + TargetScale, Target.z + TargetScale));
 
-        Transformation = GetComponent<myTransformation>();
-        if (TarCol.Intersects(Floor.BoundObject))
-        {
-            NewPostion();
-        }
-        if (TarCol.Intersects(sniper.Transformation.BoundObject))
-        {
-            NewPostion();
-        }
-        if (Transformation.BoundObject.Intersects(TarCol)) 
-        {
-            Speed = 0;
-        }
-        else
-        {
-            if (MyVector3.Length(Target- Transformation.Translation) > 50)
-            {
-                Speed = 5;
-            }
-            if (MyVector3.Length(Target- Transformation.Translation) > 500)
-            {
-                Speed = 10;
-            }
-            if (MyVector3.Length(Target- Transformation.Translation) > 5000)
-            {
-                Speed = 50;
-            }
-            if (MyVector3.Length(Target- Transformation.Translation) > 50000)
-            {
-                Speed = 100;
-            }
-            MyVector3 Direction = (Target- Transformation.Translation);
-            Direction = VectorMaths.VectorNormalized(Direction);
-            MyVector3 Velocity = Direction * Speed;
-            Transformation.Translation += Velocity;
-        }
+        //Transformation = GetComponent<myTransformation>();
+        //if (TarCol.Intersects(Floor.BoundObject))
+        //{
+        //    NewPostion();
+        //}
+        //if (TarCol.Intersects(sniper.Transformation.BoundObject))
+        //{
+        //    NewPostion();
+        //}
+        //if (Transformation.BoundObject.Intersects(TarCol)) 
+        //{
+        //    Speed = 0;
+        //}
+        //else
+        //{
+        //    if (MyVector3.Length(Target- Transformation.Translation) > 50)
+        //    {
+        //        Speed = 5;
+        //    }
+        //    if (MyVector3.Length(Target- Transformation.Translation) > 500)
+        //    {
+        //        Speed = 10;
+        //    }
+        //    if (MyVector3.Length(Target- Transformation.Translation) > 5000)
+        //    {
+        //        Speed = 50;
+        //    }
+        //    if (MyVector3.Length(Target- Transformation.Translation) > 50000)
+        //    {
+        //        Speed = 100;
+        //    }
+        //    MyVector3 Direction = (Target- Transformation.Translation);
+        //    Direction = VectorMaths.VectorNormalized(Direction);
+        //    MyVector3 Velocity = Direction * Speed;
+        //    Transformation.Translation += Velocity;
+        //}
 
 
 

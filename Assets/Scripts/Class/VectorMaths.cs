@@ -28,7 +28,7 @@ public class VectorMaths
             Vec2 = VectorNormalized(Vec2);
         }
     
-        RV = Vec1.x * Vec2.x + Vec1.y * Vec2.y;
+        RV = Vec1.x * Vec2.x + Vec1.y * Vec2.y+ Vec1.z * Vec2.z;
         return RV;
     }
 
@@ -113,6 +113,7 @@ public class VectorMaths
     public static MyVector3 RotateVertexAroundAxis(float Angle, MyVector3 Axis, MyVector3 Vertex)
     {
         //The rodriguess rotation formula
+        Angle = Deg2Rad(Angle);
         MyVector3 rv = (Vertex * Mathf.Cos(Angle)) +
             DotProduct(Vertex, Axis) * Axis * (1 - Mathf.Cos(Angle)) +
             VectorCrossProduct(Axis, Vertex) * Mathf.Sin(Angle);

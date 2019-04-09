@@ -15,6 +15,6 @@ public class MassText : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        text.text = "Mass : " + Player.Mass + " G";
+       // text.text = "Mass : " + Player.Mass + " G";
     }
 }

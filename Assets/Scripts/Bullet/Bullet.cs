@@ -6,33 +6,29 @@ public struct BulletInit
     public MyVector3 GunPosition;
     public MyVector3 GunRotation;
     public float FireSpeed, mass;
-    public myTransformation Floor;
-   // public GridHandle Collison;
 }
 public class Bullet : MonoBehaviour {
      MyVector3 GunPosition;
      MyVector3 GunRotation;
     float FireSpeed,mass;
-    public myTransformation Floor;
-
     public bool Alive = true;
-    public float timeoutDestructor;
-    public myTransformation Transformation;
-    public myRigidBody Physics;
+     float timeoutDestructor;
+    public  myTransformation Transformation;
+    public MyPhysics Physics;
     public void Init(BulletInit Initiate)
     {
         GunPosition = Initiate.GunPosition;
         GunRotation = Initiate.GunRotation;
         FireSpeed = Initiate.FireSpeed;
         mass = Initiate.mass;
-        Floor = Initiate.Floor;
-        Physics = GetComponent<myRigidBody>();
+      //  Floor = Initiate.Floor;
+        Physics = GetComponent<MyPhysics>();
         Transformation = GetComponent<myTransformation>();
     }
     void Start()
     {
         timeoutDestructor = 0;
-        Physics = GetComponent<myRigidBody>();
+        Physics = GetComponent<MyPhysics>();
         Transformation = GetComponent<myTransformation>();
         Transformation.Scale = new MyVector3(5.5f,5.5f, 5.5f);
         Physics.Mass = mass;
@@ -44,8 +40,9 @@ public class Bullet : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-      
-        timeoutDestructor += Time.deltaTime;
+        Transformation = GetComponent<myTransformation>();
+        Physics = GetComponent<MyPhysics>();
+          timeoutDestructor += Time.deltaTime;
         //if (AABB.Intersects(Transformation.CollisionBox, Floor.CollisionBox,out MyVector3))
         //{
         //    Alive = false;

@@ -3,77 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Cluter : MonoBehaviour {
-    public List<GameObject> Ambient = new List<GameObject>();
-    public Sniper Player;   // Use this for initialization
+     List<GameObject> Ambient = new List<GameObject>();
+     Sniper Player;   // Use this for initialization
     public List<GameObject> Models = new List<GameObject>();
-   public  MyVector3  OriginPoint = new MyVector3(0,0,0);
-    MyVector3 OriginLast = new MyVector3(0, 0, 0);
-    public MyVector3 radius = new MyVector3(0, 0, 0);
-    public MyVector3 Distance = new MyVector3(0, 0, 0);
-    public MyVector3 NormalisedVector = new MyVector3(0, 0, 0);
-    public int CluterAmmount =500;
+     MyVector3  OriginPoint = new MyVector3(0,0,0);
+     MyVector3 Distance = new MyVector3(0, 0, 0);
+     MyVector3 NormalisedVector = new MyVector3(0, 0, 0);
+     MyVector3 OriginLast;
+     float radius;
+     int CluterAmmount =500;
     int CluterAmmountLast =0;
-  public  float DistanceToRadius =0;
+    float DistanceToRadius =0;
     void Start () {
 		
 	}
-    MyVector3 RandomVector(MyVector3 Min,MyVector3 Max)
+    MyVector3 RandomVector(MyVector3 random)
     {
         MyVector3 Ret = new MyVector3(0,0,0);
-        Ret.x = Random.Range(Min.x, Max.x);
+        Ret.x = Random.Range(-random.x, random.x);
         Ret.y = 4;
-        Ret.z = Random.Range(Min.z, Max.z);
+        Ret.z = Random.Range(-random.z, random.z);
         return Ret;
     }
-
    // Update is called once per frame
     void Update()
     {
+        Player = GetComponent<Sniper>();
         myTransformation Ptransform = Player.GetComponent<myTransformation>();
         Distance = Ptransform.Translation - OriginPoint;
-
         DistanceToRadius = Distance.Length();
-        if (OriginPoint != OriginLast)
+
+       if (CluterAmmount != CluterAmmountLast || DistanceToRadius >= 250)
         {
-            OriginPoint = OriginLast;
-        }
-       
-
-        if (CluterAmmount != CluterAmmountLast || DistanceToRadius >= 250)
-        {
-            MyVector3 NormalisedVector = new MyVector3(1, 0, 1);
-           
-            NormalisedVector *= 500;
-
-            radius = Ptransform.Translation + NormalisedVector;
-
-            MyVector3 MinExtent = Ptransform.Translation - NormalisedVector;
-            MyVector3 MaxExtent = Ptransform.Translation + NormalisedVector;
-            DistanceToRadius = 0;
-            Debug.Log("origin change");
-            OriginPoint = new MyVector3(0, 0, 0);
-            OriginPoint = Ptransform.Translation;
-            OriginLast = OriginPoint;
-            if (Ambient != null)
+   
+          OriginPoint = new MyVector3(Ptransform.Translation.x, Ptransform.Translation.y, Ptransform.Translation.z);
+         
+          if (Ambient != null)
             {
                 if (Ambient.Count >= 0)
                 {
                     for (int i = 0; i < Ambient.Count; i++)
                     {
+         
                         Destroy(Ambient[i]);
 
                     }
                 }
             }
             Ambient.Clear();
+
             for (int i = 0; i < CluterAmmount; i++)
             {
+                radius =Random.Range(0,5000.0f);
                 int x = Random.Range(0, Models.Count);
                 GameObject go = Instantiate(Models[x], transform.position, transform.rotation);
                 go.AddComponent<myTransformation>();
-                //    go.AddComponent<MyPhysics>();
+               //go.AddComponent<MyPhysics>();
                 TransformationInit Temp;
-                Temp.Translation = RandomVector(MinExtent,MaxExtent);
+                Temp.Translation = new MyVector3(Random.Range(-1.0f, 1.0f), 6, Random.Range(-1.0f, 1.0f));
+                Temp.Translation = VectorMaths.VectorNormalized(Temp.Translation);
+                Temp.Translation *= radius;
+                Temp.Translation += OriginPoint;
+                Temp.Translation.y = 6;
+                //RandomVector(radius);
                 Temp.Feat = 2;
                 Temp.Head = 2;
                 Temp.Rotation = new MyVector3();
@@ -86,5 +78,6 @@ public class Cluter : MonoBehaviour {
 
         }
         CluterAmmountLast = CluterAmmount;
+    
     }
-}
+    }
