@@ -27,9 +27,9 @@ public class BoundingCircle :BoundingObject
     }
     public static bool Collide(BoundingCircle circle, AABB box)
     {
-        MyVector3 Mid = (box.MaxExtent - box.MinExtent) * 0.5f;
-        MyVector3 VectorToOther = Mid - circle.CenterPoint;
-
+        box.Half = (box.MaxExtent - box.MinExtent) * 0.5f;
+        box.Center = box.Half + box.MinExtent;
+        MyVector3 VectorToOther = box.Center - circle.CenterPoint;
         return VectorToOther.Length() <= circle.Radius;
     }
     public static void Resolve (BoundingCircle Circle1, BoundingCircle Circle2,out MyVector3 Normal, out float Penetration)

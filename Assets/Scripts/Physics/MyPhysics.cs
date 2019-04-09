@@ -32,17 +32,20 @@ public class MyPhysics : MonoBehaviour
             Force = new MyVector3(0, 0, 0);
             //WindVelocity = CurrentGrid.WindVelocity;
             //AirResitance = CurrentGrid.AirResitance;
+
+            AngularAcceleration = torque / Inertia;
+            AngularVelocity += AngularAcceleration * Time.fixedDeltaTime;
         }
 
         if (PhysicObjectHandler != null)
             for (int i = 0; i < PhysicObjectHandler.PhysicHandle.Count; i++)
-        {
-            if (ObjectId != PhysicObjectHandler.PhysicHandle[i].ObjectId)
             {
-                if (Transformation.BoundObject.Intersects(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject))
+                if (ObjectId != PhysicObjectHandler.PhysicHandle[i].ObjectId)
                 {
-                 
-                    Transformation.BoundObject.CollisionResolution(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject, out Normal, out Push);
+                    if (Transformation.BoundObject.Intersects(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject))
+                    {
+
+                        Transformation.BoundObject.CollisionResolution(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject, out Normal, out Push);
             
                     if (Bouncy == true)
                     {
@@ -61,14 +64,14 @@ public class MyPhysics : MonoBehaviour
         Transformation.Translation += Velocity * Time.deltaTime;
          Velocity /= AirResitance;
 
-        Quat q = new Quat();
-        float avMag = (AngularVelocity * Time.fixedDeltaTime).Length();
-        q.w = Mathf.Cos(avMag / 2);
-        q.x = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).x / avMag;
-        q.y = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).y / avMag;
-        q.z = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).z / avMag;
-        Quat TargetOrienation = q * Transformation.GetRotation();
-        Transformation.SetRotation(TargetOrienation);
+        //Quat q = new Quat();
+        //float avMag = (AngularVelocity * Time.fixedDeltaTime).Length();
+        //q.w = Mathf.Cos(avMag / 2);
+        //q.x = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).x / avMag;
+        //q.y = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).y / avMag;
+        //q.z = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).z / avMag;
+        //Quat TargetOrienation = q * Transformation.GetRotation();
+        //Transformation.SetRotation(TargetOrienation);
     }
     // Update is called once per frame
     void Update()

@@ -32,8 +32,8 @@ public class MyVector3
     public MyVector3()
     {
         x = 0;
-        x = 0;
-        x = 0;
+       y = 0;
+        z = 0;
     }
     public MyVector3(Vector3 LHS)
     {

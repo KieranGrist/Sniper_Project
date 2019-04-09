@@ -270,7 +270,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869986137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a605913cc25ba14d814c0b6522b521d, type: 3}
   m_Name: 
@@ -378,15 +378,11 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  Force:
-    x: 0
-    y: 0
-    z: 0
-  Velocity:
-    x: 0
-    y: 0
-    z: 0
   Gravity:
+    x: 0
+    y: 0
+    z: 0
+  Force:
     x: 0
     y: 0
     z: 0
@@ -394,12 +390,30 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  Velocity:
+    x: 0
+    y: 0
+    z: 0
+  torque:
+    x: 0
+    y: 0
+    z: 0
+  AngularAcceleration:
+    x: 0
+    y: 0
+    z: 0
+  AngularVelocity:
+    x: 0
+    y: 0
+    z: 0
   Mass: 1.01
   AirResitance: 1.01
   Push: 0
   ObjectId: 0
+  Inertia: 0
   Dynamic: 0
   Bouncy: 0
+  Transformation: {fileID: 0}
 --- !u!1 &1526713044
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +649,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 0
+  Center:
+    x: 0
+    y: 0
+    z: 0
+  Half:
+    x: 0
+    y: 0
+    z: 0
 --- !u!23 &2024632209
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -706,15 +728,11 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  Force:
+  Gravity:
     x: 0
     y: 0
     z: 0
-  Velocity:
-    x: 0
-    y: -1
-    z: 0
-  Gravity:
+  Force:
     x: 0
     y: 0
     z: 0
@@ -722,12 +740,30 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  Velocity:
+    x: 0
+    y: -1
+    z: 0
+  torque:
+    x: 0
+    y: 0
+    z: 0
+  AngularAcceleration:
+    x: 0
+    y: 0
+    z: 0
+  AngularVelocity:
+    x: 0
+    y: 0
+    z: 0
   Mass: 1.01
   AirResitance: 1.01
   Push: 0
   ObjectId: 0
+  Inertia: 0
   Dynamic: 1
   Bouncy: 0
+  Transformation: {fileID: 0}
 --- !u!114 &2024632213
 MonoBehaviour:
   m_ObjectHideFlags: 0

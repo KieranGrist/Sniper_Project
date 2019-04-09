@@ -66,8 +66,6 @@ public class Cluter : MonoBehaviour {
                 Temp.Translation += OriginPoint;
                 Temp.Translation.y = 6;
                 //RandomVector(radius);
-                Temp.Feat = 2;
-                Temp.Head = 2;
                 Temp.Rotation = new MyVector3();
                 Temp.Scale = new MyVector3(5, 5, 5);
 
