@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class Quat
 {
-    public float w, x, y, z;
+    public float w;
+ public float x;
+      public float y;
+      public float z;
     public Quat(float Angle, MyVector3 Axis)
     {
         float halfAngle = Angle / 2;

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class Explosion : MonoBehaviour {
     BoundingObject ExplosionBounds;
     public float ExplosionRadius = 5.0f;
@@ -14,7 +14,7 @@ public class Explosion : MonoBehaviour {
 	}
     void FixedUpdate() { 
           ExplosionBounds = new BoundingCircle(Transformation.Translation, ExplosionRadius);
-    Transformation = GetComponent<myTransformation>();
+          Transformation = GetComponent<myTransformation>();
         BoundingCircle Bonds = new BoundingCircle(new MyVector3(0, 0, 0), ExplosionRadius);
         Bonds = ExplosionBounds as BoundingCircle;
         Bonds.CenterPoint = Transformation.Translation;

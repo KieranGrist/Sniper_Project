@@ -340,7 +340,6 @@ GameObject:
   - component: {fileID: 1739089547}
   - component: {fileID: 1739089546}
   - component: {fileID: 1739089545}
-  - component: {fileID: 1739089549}
   - component: {fileID: 1739089548}
   m_Layer: 0
   m_Name: Player
@@ -372,6 +371,14 @@ MonoBehaviour:
     x: 1
     y: 1
     z: 1
+  ModelMinExtent:
+    x: 0
+    y: 0
+    z: 0
+  ModelMaxExtent:
+    x: 0
+    y: 0
+    z: 0
 --- !u!136 &1739089541
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -426,7 +433,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1739089539}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1739089544
 Transform:
   m_ObjectHideFlags: 0
@@ -466,6 +473,7 @@ MonoBehaviour:
   - {fileID: 1577014270512546, guid: e8e124e6623ea934eb682b7e7ab63fba, type: 2}
   - {fileID: 1689687139565352, guid: 115a03cfb6940f84b86ca6397d7bf4de, type: 2}
   - {fileID: 1825545461704696, guid: d3c106eceb7342047a0aeba17ffa208d, type: 2}
+  CluterAmmount: 5
 --- !u!114 &1739089547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,15 +490,11 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  Force:
-    x: 0
-    y: 0
-    z: 0
-  Velocity:
-    x: 0
-    y: 0
-    z: 0
   Gravity:
+    x: 0
+    y: 0
+    z: 0
+  Force:
     x: 0
     y: 0
     z: 0
@@ -498,12 +502,30 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  Velocity:
+    x: 0
+    y: 0
+    z: 0
+  torque:
+    x: 0
+    y: 0
+    z: 0
+  AngularAcceleration:
+    x: 0
+    y: 0
+    z: 0
+  AngularVelocity:
+    x: 0
+    y: 0
+    z: 0
   Mass: 1
   AirResitance: 1
   Push: 0
   ObjectId: 0
+  Inertia: 0
   Dynamic: 1
   Bouncy: 0
+  Transformation: {fileID: 0}
 --- !u!114 &1739089548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,9 +537,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3699ae65059b3d4c90236ab56866ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Feat: 2
-  Head: 2
-  Radius: 2
   Min:
     x: 0
     y: 0
@@ -526,33 +545,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
---- !u!114 &1739089549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1739089539}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4c0bcc8f7dc6734d9c11147dc5108fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MinExtent:
-    x: 1
-    y: 1
-    z: 1
-  MaxExtent:
-    x: 1
-    y: 1
-    z: 1
-  AABBMIN:
-    x: 0
-    y: 0
-    z: 0
-  AABBMAX:
-    x: 0
-    y: 0
-    z: 0
+  Radius: 2
 --- !u!1 &1913592410
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,11 +652,11 @@ MonoBehaviour:
     x: 9000000
     y: 1
     z: 9000000
-  AABBMIN:
+  Center:
     x: 0
     y: 0
     z: 0
-  AABBMAX:
+  Half:
     x: 0
     y: 0
     z: 0
@@ -690,6 +683,14 @@ MonoBehaviour:
     x: 9000000
     y: 1
     z: 9000000
+  ModelMinExtent:
+    x: 0
+    y: 0
+    z: 0
+  ModelMaxExtent:
+    x: 0
+    y: 0
+    z: 0
 --- !u!65 &2036679797
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -717,7 +718,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 215f33ecb4a863148b42e68afc6c6a6e, type: 2}
+  - {fileID: 2100000, guid: 36c80dc6671c38e4bb635a9af008b343, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -773,15 +774,11 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  Force:
-    x: 0
-    y: 0
-    z: 0
-  Velocity:
-    x: 0
-    y: 0
-    z: 0
   Gravity:
+    x: 0
+    y: 0
+    z: 0
+  Force:
     x: 0
     y: 0
     z: 0
@@ -789,12 +786,30 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  Velocity:
+    x: 0
+    y: 0
+    z: 0
+  torque:
+    x: 0
+    y: 0
+    z: 0
+  AngularAcceleration:
+    x: 0
+    y: 0
+    z: 0
+  AngularVelocity:
+    x: 0
+    y: 0
+    z: 0
   Mass: 1.01
   AirResitance: 1.01
   Push: 0
   ObjectId: 0
+  Inertia: 0
   Dynamic: 0
   Bouncy: 0
+  Transformation: {fileID: 0}
 --- !u!1 &2075914726
 GameObject:
   m_ObjectHideFlags: 0

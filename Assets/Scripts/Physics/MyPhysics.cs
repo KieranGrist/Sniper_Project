@@ -1,8 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[System.Serializable]
+public struct PhysicsInit
+{
+    public float Mass;
+    public bool Dynamic, Bouncy;
+}
 public class MyPhysics : MonoBehaviour
 {
+
+    public void Initialise(PhysicsInit Values)
+    {
+        this.Mass = Values.Mass;
+        this.Dynamic = Values.Dynamic;
+        this.Bouncy = Values.Bouncy;
+    }
+
     public GridHandle PhysicObjectHandler;
 
     public MyVector3 Normal = new MyVector3(0, 0, 0);
@@ -11,8 +25,14 @@ public class MyPhysics : MonoBehaviour
     public float Mass = 1.01f, AirResitance = 1.01f, Push, ObjectId, Inertia;
     public bool Dynamic, Bouncy = false; //Object that has motion and is effected by physics, if false object is static at all times, Bouncy will effect what it does when colliding, Static does not move the object at all
     public myTransformation Transformation;
+  
 
-    // Use this for initialization
+    MyPhysics()
+    {
+
+    }
+
+        // Use this for initialization
     void Start()
     {
         Gravity = new MyVector3(0, -9.3f, 0);
@@ -44,9 +64,7 @@ public class MyPhysics : MonoBehaviour
                 {
                     if (Transformation.BoundObject.Intersects(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject))
                     {
-
                         Transformation.BoundObject.CollisionResolution(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject, out Normal, out Push);
-            
                     if (Bouncy == true)
                     {
                         Transformation.Translation += Normal * (Push + 0.0000001639f);

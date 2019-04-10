@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class TargetScript : MonoBehaviour {
     
      MyVector3 Target = new MyVector3();

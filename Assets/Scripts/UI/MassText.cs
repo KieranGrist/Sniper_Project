@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+[System.Serializable]
 public class MassText : MonoBehaviour {
     // Use this for initialization
     public Text text;

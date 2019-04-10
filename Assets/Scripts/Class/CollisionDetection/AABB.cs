@@ -1,17 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
+//Collision Box used in collision detection
 public class AABB :BoundingObject
 {
+    public MyVector3 MinExtent; //Minum Bounds of Boix
+    public MyVector3 MaxExtent; //Maxium Bounds of box
+    public MyVector3 Center; //Center Of BOx
+    public MyVector3 Half; //Half Extent Of Box
+
+    //Initialise AABB with values 
     public AABB(MyVector3 Min, MyVector3 Max)
     {
-        MinExtent = Min;
+
+        //Set Extents
+        MinExtent = Min; 
         MaxExtent = Max;
+
+        //Create Half Extent
+        Half = (MaxExtent - MinExtent) * 0.5f;
+
+        //Create Center
+        Center = Half + MinExtent;
     }
 
-    public MyVector3 MinExtent;
-    public MyVector3 MaxExtent, Center, Half;
+    //Default Constructor for AABB
+    public AABB()
+    {
+        //Set Extents
+        MinExtent = new MyVector3(-1,-1,-1);
+        MaxExtent = new MyVector3(1, 1, 1);
+
+        //Create Half Extent
+        Half = (MaxExtent - MinExtent) * 0.5f;
+
+        //Create Center
+        Center = Half + MinExtent;
+    }
+
+    //Shortcut Values to get extents of box
     public float Top
     {
         get { return MaxExtent.y; }
@@ -36,12 +64,8 @@ public class AABB :BoundingObject
     {
         get { return MinExtent.z; }
     }
-    public void BoxDebug()
-    {
-        //Debug.Log(MinExtent);
-        //Debug.Log(MaxExtent);
-    }
 
+    //Collision Detection
     public static bool Collide(AABB Box1, AABB Box2)
     {
 
@@ -52,15 +76,13 @@ public class AABB :BoundingObject
         Box2.Center = Box2.Half + Box2.MinExtent;
         //Colliding to the Right
 
-
+        //Christer Ericson Formula 
         if (Mathf.Abs(Box1.Center.x - Box2.Center.x) > (Box1.Half.x + Box2.Half.x))
         {
 
             return false;
 
         }
-
-
 
         if (Mathf.Abs(Box1.Center.y - Box2.Center.y) > (Box1.Half.y + Box2.Half.y))
         {
@@ -73,33 +95,30 @@ public class AABB :BoundingObject
         }
         return true;
     }
+
     public static bool Collide(AABB Box1, BoundingCapsule Capsule2)
     {
         Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;// + Box1.MinExtent;
         //Get Direction Between the two boxes + edges
         Box1.Center = Box1.Half + Box1.MinExtent;
-        Capsule2.A.x -= Capsule2.Radius;
-        Capsule2.A.z -= Capsule2.Radius;
-        Capsule2.B.x += Capsule2.Radius;
-        Capsule2.B.z += Capsule2.Radius;
-        Capsule2.Half = (Capsule2.B - Capsule2.A) * 0.5f;
-        Capsule2.Center = Capsule2.Half + Capsule2.A;
+        AABB Box2 = new AABB(Capsule2.A, Capsule2.B);
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box2.Center = Box2.Half + Box2.MinExtent;
 
-        if (Mathf.Abs(Box1.Center.x - Capsule2.Center.x) > (Box1.Half.x + Capsule2.Half.x))
+
+        if (Mathf.Abs(Box1.Center.x - Box2.Center.x) > (Box1.Half.x + Box2.Half.x))
         {
 
             return false;
 
         }
 
-
-
-        if (Mathf.Abs(Box1.Center.y - Capsule2.Center.y) > (Box1.Half.y + Capsule2.Half.y))
+        if (Mathf.Abs(Box1.Center.y - Box2.Center.y) > (Box1.Half.y + Box2.Half.y))
         {
             return false;
         }
 
-        if (Mathf.Abs(Box1.Center.z - Capsule2.Center.z) > (Box1.Half.z + Capsule2.Half.z))
+        if (Mathf.Abs(Box1.Center.z - Box2.Center.z) > (Box1.Half.z + Box2.Half.z))
         {
             return false;
         }
@@ -112,6 +131,7 @@ public class AABB :BoundingObject
         MyVector3 VectorToOther = box.Center - circle.CenterPoint;
         return VectorToOther.Length() <= circle.Radius;
     }
+
 
         public static bool LineIntersection(AABB Box, MyVector3 StartPoint, MyVector3 EndPoint, out MyVector3 intersectionPoint)
     {
@@ -218,104 +238,107 @@ public class AABB :BoundingObject
 
     public static void Resolve(AABB Box1, BoundingCircle Circle2, out MyVector3 Normal, out float Penetration)
     {
+
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
         Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;
         Box1.Center = Box1.Half + Box1.MinExtent;
+        float Radius = Circle2.Radius;
+        Radius *= 0.5f;
+        MyVector3 Extent = new MyVector3(Radius, Radius, Radius);
+        AABB Box2;
+        Box2 = new AABB(Circle2.CenterPoint - Extent, Circle2.CenterPoint + Extent);
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box2.Center = Box2.Half + Box2.MinExtent;
 
 
-        MyVector3 MinExtent, MaxExtent;
-        MinExtent = Circle2.CenterPoint - Circle2.Radius;
-        MaxExtent = Circle2.CenterPoint + Circle2.Radius;
-        Circle2.Half = (MaxExtent - MinExtent) * 0.5f;
-
-        Circle2.CenterPoint = Circle2.Half + MinExtent;
-        float CurPenetration = (Box1.Half.x + Circle2.Half.x) - Mathf.Abs(Box1.Center.x - Circle2.CenterPoint.x);
+        float CurPenetration = (Box1.Half.x + Box2.Half.x) - Mathf.Abs(Box1.Center.x - Box2.Center.x);
         if (CurPenetration < Penetration)
         {
 
             Penetration = CurPenetration;
-            if (Box1.Center.x > Circle2.CenterPoint.x)
-            {
-                Normal = new MyVector3(-1, 0, 0);
-            }
-
-            if (Box1.Center.x < Circle2.CenterPoint.x)
+            if (Box1.Center.x > Box2.Center.x)
             {
                 Normal = new MyVector3(1, 0, 0);
             }
+
+            if (Box1.Center.x < Box2.Center.x)
+            {
+                Normal = new MyVector3(-1, 0, 0);
+            }
         }
-        CurPenetration = (Box1.Half.y + Circle2.Half.y) - Mathf.Abs(Box1.Center.y - Circle2.CenterPoint.y);
+        CurPenetration = (Box1.Half.y + Box2.Half.y) - Mathf.Abs(Box1.Center.y - Box2.Center.y);
 
         if (CurPenetration < Penetration)
         {
             Penetration = CurPenetration;
-            if (Box1.Center.y > Circle2.CenterPoint.y)
-                Normal = new MyVector3(0, -1, 0);
-            if (Box1.Center.y < Circle2.CenterPoint.y)
+            if (Box1.Center.y > Box2.Center.y)
                 Normal = new MyVector3(0, 1, 0);
+            if (Box1.Center.y < Box2.Center.y)
+                Normal = new MyVector3(0, -1, 0);
         }
 
-        CurPenetration = (Box1.Half.z + Circle2.Half.z) - Mathf.Abs(Box1.Center.z - Circle2.CenterPoint.z);
+        CurPenetration = (Box1.Half.z + Box2.Half.z) - Mathf.Abs(Box1.Center.z - Box2.Center.z);
 
         if (CurPenetration < Penetration)
         {
             Penetration = CurPenetration;
-            if (Box1.Center.z > Circle2.CenterPoint.z)
-                Normal = new MyVector3(0, 0, -1);
-            if (Box1.Center.z < Circle2.CenterPoint.z)
+            if (Box1.Center.z > Box2.Center.z)
                 Normal = new MyVector3(0, 0, 1);
+            if (Box1.Center.z < Box2.Center.z)
+                Normal = new MyVector3(0, 0, -1);
         }
 
     }
     public static void Resolve(AABB Box1, BoundingCapsule Capsule2, out MyVector3 Normal, out float Penetration)
     {
+
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
 
-        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;
-        Capsule2.Half = (Capsule2.B - Capsule2.A) * 0.5f;
-
-
+        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;// + Box1.MinExtent;
         //Get Direction Between the two boxes + edges
         Box1.Center = Box1.Half + Box1.MinExtent;
-        Capsule2.Center = Capsule2.Half + Capsule2.A;
+        AABB Box2 = new AABB(new MyVector3(Capsule2.A.x , Capsule2.A.y, Capsule2.A.z), new MyVector3(Capsule2.B.x , Capsule2.B.y, Capsule2.B.z));
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box2.Center = Box2.Half + Box2.MinExtent;
 
 
-        float CurPenetration = (Box1.Half.x + Capsule2.Half.x) - Mathf.Abs(Box1.Center.x - Capsule2.Center.x);
+
+        float CurPenetration = (Box1.Half.x + Box2.Half.x) - Mathf.Abs(Box1.Center.x - Box2.Center.x);
         if (CurPenetration < Penetration)
         {
 
             Penetration = CurPenetration;
-            if (Box1.Center.x > Capsule2.Center.x)
+            if (Box1.Center.x > Box2.Center.x)
             {
                 Normal = new MyVector3(-1, 0, 0);
             }
 
-            if (Box1.Center.x < Capsule2.Center.x)
+            if (Box1.Center.x < Box2.Center.x)
             {
                 Normal = new MyVector3(1, 0, 0);
             }
         }
-        CurPenetration = (Box1.Half.y + Capsule2.Half.y) - Mathf.Abs(Box1.Center.y - Capsule2.Center.y);
+        CurPenetration = (Box1.Half.y + Box2.Half.y) - Mathf.Abs(Box1.Center.y - Box2.Center.y);
 
         if (CurPenetration < Penetration)
         {
             Penetration = CurPenetration;
-            if (Box1.Center.y > Capsule2.Center.y)
+            if (Box1.Center.y > Box2.Center.y)
                 Normal = new MyVector3(0, -1, 0);
-            if (Box1.Center.y < Capsule2.Center.y)
+            if (Box1.Center.y < Box2.Center.y)
                 Normal = new MyVector3(0, 1, 0);
         }
 
-        CurPenetration = (Box1.Half.z + Capsule2.Half.z) - Mathf.Abs(Box1.Center.z - Capsule2.Center.z);
+        CurPenetration = (Box1.Half.z + Box2.Half.z) - Mathf.Abs(Box1.Center.z - Box2.Center.z);
 
         if (CurPenetration < Penetration)
         {
             Penetration = CurPenetration;
-            if (Box1.Center.z > Capsule2.Center.z)
+            if (Box1.Center.z > Box2.Center.z)
                 Normal = new MyVector3(0, 0, -1);
-            if (Box1.Center.z < Capsule2.Center.z)
+            if (Box1.Center.z < Box2.Center.z)
                 Normal = new MyVector3(0, 0, 1);
         }
     }

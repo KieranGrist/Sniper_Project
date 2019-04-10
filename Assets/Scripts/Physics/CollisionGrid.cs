@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class CollisionGrid : MonoBehaviour {
      MyVector3 WindVelocity;
      float ChangeTimer,AirResitance;
      myTransformation Transformation;
-     public MyVector3 StartPosition, StartScale;
+    public MyVector3 StartPosition;
+      public MyVector3 StartScale;
     void Start () {
         Transformation = GetComponent<myTransformation>();
         Transformation.Translation = StartPosition;

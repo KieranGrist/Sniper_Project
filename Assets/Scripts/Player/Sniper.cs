@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+[System.Serializable]
 public class Sniper : MonoBehaviour
 {
     MyPhysics physics;
-     Slider ForceSlider, MassSlider;
+    Slider ForceSlider;
+    Slider MassSlider;
      Canvas UI;
      float FireSpeed, Mass;
      CamLock bfocus;

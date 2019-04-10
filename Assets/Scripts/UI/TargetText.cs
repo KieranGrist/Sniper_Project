@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+[System.Serializable]
 public class TargetText : MonoBehaviour {
     public Text text;
     public TargetSpawn TargetSpawner;

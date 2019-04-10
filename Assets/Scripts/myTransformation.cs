@@ -109,7 +109,7 @@ public class myTransformation : MonoBehaviour
         }
         for (int i =0; i < ModelSpaceVertices.Length; i++)
         {
-            if (ModelSpaceVertices[i].x <ModelMinExtent.x )
+            if (ModelSpaceVertices[i].x <ModelMinExtent.x)
             {
                 ModelMinExtent.x = ModelSpaceVertices[i].x;
             }

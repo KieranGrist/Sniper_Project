@@ -72,7 +72,7 @@
     <Compile Include="Assets\Scripts\Class\Quat.cs" />
     <Compile Include="Assets\Scripts\Class\VectorMaths.cs" />
     <Compile Include="Assets\Scripts\CollisionObjects\BoxUpdater.cs" />
-    <Compile Include="Assets\Scripts\CollisionObjects\CylanderUpdater.cs" />
+    <Compile Include="Assets\Scripts\CollisionObjects\CapsuleUpdater.cs" />
     <Compile Include="Assets\Scripts\CollisionObjects\SphereUpdate.cs" />
     <Compile Include="Assets\Scripts\myTransformation.cs" />
     <Compile Include="Assets\Scripts\Physics\CollisionGrid.cs" />
@@ -93,16 +93,16 @@
     <Compile Include="Assets\Scripts\UI\MassText.cs" />
     <Compile Include="Assets\Scripts\UI\TargetText.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/UP814853/Sniper Balastic Project/Sniper_Project/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>D:/814853/Sniper_Project/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/UP814853/Sniper Balastic Project/Sniper_Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/814853/Sniper_Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/UP814853/Sniper Balastic Project/Sniper_Project/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>D:/814853/Sniper_Project/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/UP814853/Sniper Balastic Project/Sniper_Project/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/814853/Sniper_Project/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -282,7 +282,7 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Unity.Locator.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity.Settings">
-      <HintPath>D:/UP814853/Sniper Balastic Project/Sniper_Project/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
+      <HintPath>D:/814853/Sniper_Project/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

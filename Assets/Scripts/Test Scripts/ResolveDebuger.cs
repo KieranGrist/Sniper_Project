@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class ResolveDebuger : MonoBehaviour {
     public myTransformation Object1;
     public myTransformation Object2;

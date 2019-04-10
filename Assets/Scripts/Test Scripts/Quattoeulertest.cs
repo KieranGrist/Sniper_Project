@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class Quattoeulertest : MonoBehaviour {
     public myTransformation Transformation;
     public Quat q = new Quat();

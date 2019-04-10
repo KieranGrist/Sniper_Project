@@ -213,7 +213,7 @@ MonoBehaviour:
   PhysicHandle: []
   Gravity:
     x: 0
-    y: -1
+    y: -9.3
     z: 0
   Model: {fileID: 1988363713655132, guid: c2643547f1f4dee4c9e04ba438d835db, type: 2}
 --- !u!1 &869986137
@@ -226,8 +226,8 @@ GameObject:
   - component: {fileID: 869986144}
   - component: {fileID: 869986143}
   - component: {fileID: 869986142}
-  - component: {fileID: 869986141}
   - component: {fileID: 869986138}
+  - component: {fileID: 869986140}
   - component: {fileID: 869986139}
   - component: {fileID: 869986145}
   m_Layer: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869986137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4c0bcc8f7dc6734d9c11147dc5108fc, type: 3}
   m_Name: 
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869986137}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a605913cc25ba14d814c0b6522b521d, type: 3}
   m_Name: 
@@ -295,18 +295,22 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
---- !u!65 &869986141
-BoxCollider:
+--- !u!114 &869986140
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869986137}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77f485e99791e541b2071edead37954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Radius: 0
+  CenterPoint:
+    x: 0
+    y: 0
+    z: 0
 --- !u!23 &869986142
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -348,7 +352,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 869986137}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &869986144
 Transform:
   m_ObjectHideFlags: 0
@@ -568,8 +572,8 @@ GameObject:
   - component: {fileID: 2024632210}
   - component: {fileID: 2024632209}
   - component: {fileID: 2024632207}
-  - component: {fileID: 2024632213}
   - component: {fileID: 2024632208}
+  - component: {fileID: 2024632213}
   - component: {fileID: 2024632212}
   - component: {fileID: 2024632206}
   m_Layer: 0
@@ -592,7 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Translation:
     x: 0
-    y: 5
+    y: 15
     z: 0
   Rotation:
     x: 0
@@ -643,17 +647,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2024632205}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d77f485e99791e541b2071edead37954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 0
-  Center:
-    x: 0
-    y: 0
-    z: 0
-  Half:
+  CenterPoint:
     x: 0
     y: 0
     z: 0
@@ -698,7 +698,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2024632205}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &2024632211
 Transform:
   m_ObjectHideFlags: 0
@@ -730,7 +730,7 @@ MonoBehaviour:
     z: 0
   Gravity:
     x: 0
-    y: 0
+    y: -9.3
     z: 0
   Force:
     x: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2024632205}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3699ae65059b3d4c90236ab56866ec5, type: 3}
   m_Name: 
@@ -783,12 +783,4 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  Center:
-    x: 0
-    y: 0
-    z: 0
-  Half:
-    x: 0
-    y: 0
-    z: 0
-  Radius: 1
+  Radius: 0

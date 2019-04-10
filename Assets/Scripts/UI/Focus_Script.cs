@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+[System.Serializable]
 public class Focus_Script : MonoBehaviour {
     public Canvas UI;
     public Canvas[] Pages = new Canvas[5];

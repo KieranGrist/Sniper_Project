@@ -1,7 +1,7 @@
-﻿    using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class Cluter : MonoBehaviour {
      List<GameObject> Ambient = new List<GameObject>();
      Sniper Player;   // Use this for initialization
@@ -11,7 +11,7 @@ public class Cluter : MonoBehaviour {
      MyVector3 NormalisedVector = new MyVector3(0, 0, 0);
      MyVector3 OriginLast;
      float radius;
-     int CluterAmmount =500;
+ public int CluterAmmount =500;
     int CluterAmmountLast =0;
     float DistanceToRadius =0;
     void Start () {
@@ -21,7 +21,7 @@ public class Cluter : MonoBehaviour {
     {
         MyVector3 Ret = new MyVector3(0,0,0);
         Ret.x = Random.Range(-random.x, random.x);
-        Ret.y = 4;
+        Ret.y = 14;
         Ret.z = Random.Range(-random.z, random.z);
         return Ret;
     }
@@ -51,15 +51,40 @@ public class Cluter : MonoBehaviour {
                 }
             }
             Ambient.Clear();
-
+  
             for (int i = 0; i < CluterAmmount; i++)
             {
                 radius =Random.Range(0,5000.0f);
                 int x = Random.Range(0, Models.Count);
-                GameObject go = Instantiate(Models[x], transform.position, transform.rotation);
-                go.AddComponent<myTransformation>();
-               //go.AddComponent<MyPhysics>();
+
                 TransformationInit Temp;
+                Temp.Scale = new MyVector3(1, 1, 1);
+                GameObject go = Instantiate(Models[x], transform.position, transform.rotation);
+                PhysicsInit physicsInit;
+                physicsInit.Bouncy = false;
+                physicsInit.Dynamic = true;
+                physicsInit.Mass = Random.Range(1.0f, 100.0f);
+                go.AddComponent<myTransformation>();
+                if (x == 0)
+                {
+                    Temp.Scale = new MyVector3(5, 2, 4);
+                    go.AddComponent<BoxUpdater>();
+                }
+
+                if (x ==1)
+                {
+                    Temp.Scale = new MyVector3(1, 5, 1);
+                    go.AddComponent<CapsuleUpdater>();
+                }
+                if (x ==2 )
+                {
+                    Temp.Scale = new MyVector3(1, 1, 1);
+                    go.AddComponent<SphereUpdate>();
+                    physicsInit.Bouncy = true;
+                    physicsInit.Dynamic = false;
+                }
+             
+          
                 Temp.Translation = new MyVector3(Random.Range(-1.0f, 1.0f), 6, Random.Range(-1.0f, 1.0f));
                 Temp.Translation = VectorMaths.VectorNormalized(Temp.Translation);
                 Temp.Translation *= radius;
@@ -67,7 +92,9 @@ public class Cluter : MonoBehaviour {
                 Temp.Translation.y = 6;
                 //RandomVector(radius);
                 Temp.Rotation = new MyVector3();
-                Temp.Scale = new MyVector3(5, 5, 5);
+             //   go.AddComponent<MyPhysics>();
+
+            //    go.GetComponent<MyPhysics>().Initialise(physicsInit);
 
                 go.GetComponent<myTransformation>().Initialise(Temp);
                 go.name = "Cluter" + i;

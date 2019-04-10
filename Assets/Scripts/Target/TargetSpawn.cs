@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+[System.Serializable]
 public class TargetSpawn : MonoBehaviour {
      List<GameObject> Targets = new List<GameObject>();
     public GameObject cube;

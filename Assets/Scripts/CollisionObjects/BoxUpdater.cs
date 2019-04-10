@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class BoxUpdater : MonoBehaviour {
     public MyVector3 MinExtent;
-    public MyVector3 MaxExtent, Center, Half;
+    public MyVector3 MaxExtent;
+     public MyVector3 Center;
+     public MyVector3 Half;
     //  Use this for initialization
     void Start () {
     }
