@@ -28,6 +28,7 @@ public class Sniper : MonoBehaviour
     }
     void Fire()
     {
+        Transformation = GetComponent<myTransformation>();
         GameObject go = Instantiate(BulletModel, new Vector3(0, 0, 0), transform.rotation);
         go.name = "Bullet";
         go.AddComponent<myTransformation>();
@@ -37,12 +38,13 @@ public class Sniper : MonoBehaviour
         BulletInit Temp;
         Temp.FireSpeed = FireSpeed;
         Temp.mass = Mass;
-        Temp.GunPosition = Transformation.Translation * RightDirection * 1;
-        Temp.GunPosition.y += 1;
+        Temp.GunPosition = Transformation.Translation;
+        Temp.GunPosition.y += 10;
         Temp.GunRotation = Transformation.Rotation;
         go.GetComponent<Bullet>().Init(Temp);
         Bullets.Add(go.GetComponent<Bullet>());
         BulletHandler.Add(go);
+
     }
     void Update()
     {
