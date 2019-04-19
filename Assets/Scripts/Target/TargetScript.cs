@@ -5,19 +5,15 @@ using UnityEngine;
 public class TargetScript : MonoBehaviour {
     
      MyVector3 Target = new MyVector3();
-     float TargetScale =10;
-     int TIMESCOMPLETE = 0;
+
     myTransformation Transformation;
-     BoundingObject TarCol;
+    BoundingObject TarCol;
     float Speed = 1;
     public bool Alive = true;
-    public Sniper sniper;
    public TargetSpawn TaretSpawner;
-    public myTransformation Floor;
-    void Start()
-    {
+    void Start() { 
         Transformation = GetComponent<myTransformation>();
-        Transformation.BoundObject = new AABB(new MyVector3(-1, -1, -1), new MyVector3(1, 1, 1));
+        Transformation.Translation.y = 100;
         TarCol = new AABB(new MyVector3(-3, -3, -3), new MyVector3(3, 3, 3));
         Target.x = 0;
         Target.y = 0;
@@ -38,62 +34,49 @@ public class TargetScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //for (int i = 0; i < sniper.Bullets.Count; i++)
-        //{
-        //    if (Transformation.BoundObject.Intersects(sniper.Bullets[i].Transformation.BoundObject))
-        //    {
-        //        Alive = false;
-        //        GameObject.Find("Sniper").GetComponent<Sniper>().Bullets[i].GetComponent<Bullet>().Alive = false;
-        //    }
-        //}
+
+        MyPhysics physics = GetComponent<MyPhysics>();
+        if (physics.Collided == true)
+        {
+            Alive = false;
+        }
+
+        Transformation = GetComponent<myTransformation>();
 
 
-
-    
-        //TarCol = new AABB(new MyVector3(Target.x - TargetScale, Target.y - TargetScale, Target.z - TargetScale), new MyVector3(Target.x + TargetScale, Target.y + TargetScale, Target.z + TargetScale));
-
-        //Transformation = GetComponent<myTransformation>();
-        //if (TarCol.Intersects(Floor.BoundObject))
-        //{
-        //    NewPostion();
-        //}
-        //if (TarCol.Intersects(sniper.Transformation.BoundObject))
-        //{
-        //    NewPostion();
-        //}
-        //if (Transformation.BoundObject.Intersects(TarCol)) 
-        //{
-        //    Speed = 0;
-        //}
-        //else
-        //{
-        //    if (MyVector3.Length(Target- Transformation.Translation) > 50)
-        //    {
-        //        Speed = 5;
-        //    }
-        //    if (MyVector3.Length(Target- Transformation.Translation) > 500)
-        //    {
-        //        Speed = 10;
-        //    }
-        //    if (MyVector3.Length(Target- Transformation.Translation) > 5000)
-        //    {
-        //        Speed = 50;
-        //    }
-        //    if (MyVector3.Length(Target- Transformation.Translation) > 50000)
-        //    {
-        //        Speed = 100;
-        //    }
-        //    MyVector3 Direction = (Target- Transformation.Translation);
-        //    Direction = VectorMaths.VectorNormalized(Direction);
-        //    MyVector3 Velocity = Direction * Speed;
-        //    Transformation.Translation += Velocity;
-        //}
+        if (Transformation.BoundObject.Intersects(TarCol))
+        {
+            Speed = 0;
+        }
+        else
+        {
+            if (MyVector3.Length(Target - Transformation.Translation) > 50)
+            {
+                Speed = 5;
+            }
+            if (MyVector3.Length(Target - Transformation.Translation) > 500)
+            {
+                Speed = 10;
+            }
+            if (MyVector3.Length(Target - Transformation.Translation) > 5000)
+            {
+                Speed = 50;
+            }
+            if (MyVector3.Length(Target - Transformation.Translation) > 50000)
+            {
+                Speed = 100;
+            }
+            MyVector3 Direction = (Target - Transformation.Translation);
+            Direction = VectorMaths.VectorNormalized(Direction);
+            MyVector3 Velocity = Direction * Speed;
+            Transformation.Translation += Velocity;
+        }
 
 
 
 
 
-  
+
     }
 }
         

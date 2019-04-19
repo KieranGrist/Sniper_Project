@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 [System.Serializable]
 public class TargetText : MonoBehaviour {
-    public Text text;
-    public TargetSpawn TargetSpawner;
+
+ 
     // Use this for initialization
     void Start () {
 		
@@ -13,6 +13,10 @@ public class TargetText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Text text = GetComponent<Text>();
+        TargetSpawn TargetSpawner = FindObjectOfType<TargetSpawn>();
         text.text = "Target Ammount : " + TargetSpawner.TargetMax;
+
+
     }
 }

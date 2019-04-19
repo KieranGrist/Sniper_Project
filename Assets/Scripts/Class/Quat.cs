@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Quat
 {
+    public float x;
+    public float y;
+    public float z;
     public float w;
- public float x;
-      public float y;
-      public float z;
     public Quat(float Angle, MyVector3 Axis)
     {
         float halfAngle = Angle / 2;
@@ -22,6 +22,7 @@ public class Quat
         x = Axis.x;
         y = Axis.y;
         z = Axis.z;
+        w = 1;
     }
 
     public Quat(Vector4 Axis)
@@ -173,9 +174,17 @@ public class Quat
         //RS = (SwRw – Sv· Rv,  Sw * Rv +Rw * Sv + Rv X Sv)
         // s = right
         /// R = left 
-        ret.w = lhs.w * rhs.w + VectorMaths.DotProduct(new MyVector3(lhs.x, lhs.y, lhs.z), new MyVector3(rhs.x, rhs.y, rhs.z));
-        MyVector3 Vec = rhs.w * lhs.GetVector() + lhs.w * rhs.GetVector() + VectorMaths.VectorCrossProduct(lhs.GetVector(), rhs.GetVector());
-        ret.SetVector(Vec);
+        /// 
+
+        ret.x = lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y + lhs.w * rhs.x;
+        ret.y = -lhs.x * rhs.z + lhs.y * rhs.w + lhs.z * rhs.x + lhs.w * rhs.y;
+        ret.z = lhs.x * rhs.y - lhs.y * rhs.x + lhs.z * rhs.w + lhs.w * rhs.z;
+        ret.w = -lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z + lhs.w * rhs.w;
+
+
+        //ret.w = lhs.w * rhs.w + VectorMaths.DotProduct(new MyVector3(lhs.x, lhs.y, lhs.z), new MyVector3(rhs.x, rhs.y, rhs.z),false);
+        //MyVector3 Vec = rhs.w * lhs.GetVector() + lhs.w * rhs.GetVector() + VectorMaths.VectorCrossProduct(lhs.GetVector(), rhs.GetVector());
+        //ret.SetVector(Vec);
         return ret;
     }
     public Quat Inverse()
@@ -257,17 +266,84 @@ public class Quat
             return ret;
         }
     }
-    public static MyVector3 QuatToEuler(Quat q)
+    public static Quat CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+    {
+        //https://stackoverflow.com/questions/11492299/quaternion-to-euler-angles-algorithm-how-to-convert-to-y-up-and-between-ha/11505219
+        float num = roll * 0.5f;
+        float num2 =   Mathf.Sin(num);
+        float num3 = Mathf.Cos(num);
+        float num4 = pitch * 0.5f;
+        float num5 = Mathf.Sin(num4);
+        float num6 =Mathf.Cos(num4);
+        float num7 = yaw * 0.5f;
+        float num8 =Mathf.Sin(num7);
+        float num9 =Mathf.Cos(num7);
+        Quat result = new Quat();
+        result.x = num9 * num5 * num3 + num8 * num6 * num2;
+        result.y = num8 * num6 * num3 - num9 * num5 * num2;
+        result.z = num9 * num6 * num2 - num8 * num5 * num3;
+        result.w = num9 * num6 * num3 + num8 * num5 * num2;
+        return result;
+    }
+
+
+    public static MyVector3 QuatToEuler(Quat q1)
     {
         MyVector3 RET = new MyVector3();
-        Matrix4B4 m = Matrix4B4.QuatToMatrix(q);
-        float sy = Mathf.Sqrt(m.values[0, 0] * m.values[0, 0] + m.values[1, 0] * m.values[1, 0]);
+        if (float.IsNaN(q1.w))
+        {
+            q1.w = 0;
+        }
 
-        RET.x = Mathf.Atan2(m.values[2, 1], m.values[2, 2]);
-        RET.y = Mathf.Atan2(-m.values[2, 0], sy);
-        RET.z = Mathf.Atan2(m.values[1, 0], m.values[0, 0]);
+        if (float.IsNaN(q1.x))
+        {
+            q1.x = 0;
+        }
+
+        if (float.IsNaN(q1.y))
+        {
+            q1.y = 0;
+        }
+   
+
+        if (float.IsNaN(q1.z))
+        {
+            q1.z = 0;
+        }
+        float heading, attitude, bank;
+        float sqw = q1.w * q1.w;
+        float sqx = q1.x * q1.x;
+        float sqy = q1.y * q1.y;
+        float sqz = q1.z * q1.z;
+        float unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+        float test = q1.x * q1.y + q1.z * q1.w;
+        if (test > 0.499 * unit)
+        { // singularity at north pole
+            heading = 2 * Mathf.Atan2(q1.x, q1.w);
+            attitude = Mathf.PI / 2;
+            bank = 0;
+
+            RET = new MyVector3(bank, heading, attitude);
+            RET *= Mathf.Rad2Deg;
+            return RET;
+        }
+        if (test < -0.499 * unit)
+        { // singularity at south pole
+            heading = -2 * Mathf.Atan2(q1.x, q1.w);
+            attitude = -Mathf.PI / 2;
+            bank = 0;
+            RET = new MyVector3(bank, heading, attitude);
+            RET *= Mathf.Rad2Deg;
+            return RET;
+        }
+        heading = Mathf.Atan2(2 * q1.y * q1.w - 2 * q1.x * q1.z, sqx - sqy - sqz + sqw);
+        attitude = Mathf.Asin(2 * test / unit);
+        bank = Mathf.Atan2(2 * q1.x * q1.w - 2 * q1.y * q1.z, -sqx + sqy - sqz + sqw);
+
+        RET = new MyVector3(bank, heading, attitude);
         RET *= Mathf.Rad2Deg;
         return RET;
+
     }
     public static Quat EulerToQuat(MyVector3 EulerAngle)
     {

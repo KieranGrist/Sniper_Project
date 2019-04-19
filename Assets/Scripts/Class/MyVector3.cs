@@ -19,9 +19,6 @@ public class MyVector3
     public static MyVector3 forward = new MyVector3(0, 0, 1);
     public static MyVector3 backWard = new MyVector3(0, 0, -1);
     public static MyVector3 zero = new MyVector3(0, 0, 0);
-
-
-    Vector3 Test;
     public void MyVec3Debug()
     {
         Debug.Log("X = " + x);
@@ -231,7 +228,7 @@ public class MyVector3
     public float Length()
     {
         float rv;
-        rv = Mathf.Sqrt(x * x + y * y + z*z);
+        rv = Mathf.Sqrt(x * x + y * y + z * z);
         return rv;
     }
 

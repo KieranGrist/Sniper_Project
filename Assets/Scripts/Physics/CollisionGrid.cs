@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 public class CollisionGrid : MonoBehaviour {
-     MyVector3 WindVelocity;
-     float ChangeTimer,AirResitance;
-     myTransformation Transformation;
+    public MyVector3 WindVelocity;
+    public float ChangeTimer,AirResitance;
+    public  myTransformation Transformation;
     public MyVector3 StartPosition;
       public MyVector3 StartScale;
     void Start () {
@@ -27,10 +27,18 @@ public class CollisionGrid : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        Transformation.BoundObject = new AABB(
-        Transformation.Translation - new MyVector3(1, 1, 1),
-        Transformation.Translation + new MyVector3(1, 1, 1));
         ChangeTimer += Time.deltaTime;
+          List<MyPhysics> PhysicHandle = new List<MyPhysics>();
+     PhysicHandle.AddRange(FindObjectsOfType<MyPhysics>());
+        for (int i = 0; i < PhysicHandle.Count; i++)
+        {
+            //if (Transformation.BoundObject.Intersects(PhysicHandle[i].Transformation.BoundObject))
+            //{
+            //    PhysicHandle[i].Force = WindVelocity *100;
+            //    PhysicHandle[i].AirResitance = AirResitance;
+            //}
+        }
+
 		if (ChangeTimer >=10)
         {
             WindVelocity = RandomVector(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);

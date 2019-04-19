@@ -9,10 +9,6 @@ public class TargetSpawn : MonoBehaviour {
     public float TargetDistance = 150, TargetMax = 10;
      float TargetMaxLast = 5, ResawnTimer;
     public Slider TargetMaxSlider, TargetDistanceSlider;
-
-    public Sniper sniper;
-    public myTransformation Floor;
-
     // Use this for initialization
     void Start()
     {
@@ -41,12 +37,12 @@ public class TargetSpawn : MonoBehaviour {
         for (int i = 0; i < TargetMax; i++)
         {
             GameObject go = Instantiate(cube, new Vector3(0, 0, 0), transform.rotation);
-            go.name = "Cube"+i;
+            go.name = "Target"+i;
             go.AddComponent<myTransformation>();
             go.AddComponent<TargetScript>();
+            go.AddComponent<MyPhysics>();
+            go.AddComponent<BoxUpdater>();
             TargetScript target = go.GetComponent<TargetScript>();
-            target.Floor = Floor;
-            target.sniper = sniper;
             target.TaretSpawner = this;
      
             Targets.Add(go);
@@ -57,7 +53,7 @@ public class TargetSpawn : MonoBehaviour {
         Destroy(Dead);
     }
     void Update()
-    {
+   {
         TargetMaxChange();
         TargetDistanceChange();
         for (int i = 0; i < Targets.Count; i++)

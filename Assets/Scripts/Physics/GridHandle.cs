@@ -29,7 +29,7 @@ public class GridHandle : MonoBehaviour {
         float PocketsNeeded = 25000;
         if (PocketsNeeded != PocketLast)
         {
-            scale = PocketsNeeded / 5;
+            scale = PocketsNeeded / 2;
             for (int b = 0; b < GOHandle.Count; b++)
             {
                 Destroy(GOHandle[b]);
@@ -47,6 +47,7 @@ public class GridHandle : MonoBehaviour {
                         go.name = "Grid" + i;
                         go.AddComponent<myTransformation>();
                         go.AddComponent<CollisionGrid>();
+                        go.AddComponent<BoxUpdater>();
                         Grids.Add(go.GetComponent<CollisionGrid>());
                         Grids[i].StartPosition = new MyVector3(x, y, z);
                         Grids[i].StartScale = new MyVector3(scale, scale, scale);

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class DistanceText : MonoBehaviour
 {
-    public Text text;
+
     public TargetSpawn TargetSpawner;
     // Use this for initialization
     void Start()
@@ -15,7 +15,8 @@ public class DistanceText : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        text.text = "Max Spawn Distance : " + TargetSpawner.TargetDistance;
+    {    
+         Text text = GetComponent<Text>();
+          text.text = "Max Spawn Distance : " + TargetSpawner.TargetDistance;
     }
 }

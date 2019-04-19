@@ -312,12 +312,12 @@ public class AABB :BoundingObject
             Penetration = CurPenetration;
             if (Box1.Center.x > Box2.Center.x)
             {
-                Normal = new MyVector3(-1, 0, 0);
+                Normal = new MyVector3(1, 0, 0);
             }
 
             if (Box1.Center.x < Box2.Center.x)
             {
-                Normal = new MyVector3(1, 0, 0);
+                Normal = new MyVector3(-1, 0, 0);
             }
         }
         CurPenetration = (Box1.Half.y + Box2.Half.y) - Mathf.Abs(Box1.Center.y - Box2.Center.y);
@@ -326,9 +326,9 @@ public class AABB :BoundingObject
         {
             Penetration = CurPenetration;
             if (Box1.Center.y > Box2.Center.y)
-                Normal = new MyVector3(0, -1, 0);
-            if (Box1.Center.y < Box2.Center.y)
                 Normal = new MyVector3(0, 1, 0);
+            if (Box1.Center.y < Box2.Center.y)
+                Normal = new MyVector3(0, -1, 0);
         }
 
         CurPenetration = (Box1.Half.z + Box2.Half.z) - Mathf.Abs(Box1.Center.z - Box2.Center.z);
@@ -337,9 +337,9 @@ public class AABB :BoundingObject
         {
             Penetration = CurPenetration;
             if (Box1.Center.z > Box2.Center.z)
-                Normal = new MyVector3(0, 0, -1);
-            if (Box1.Center.z < Box2.Center.z)
                 Normal = new MyVector3(0, 0, 1);
+            if (Box1.Center.z < Box2.Center.z)
+                Normal = new MyVector3(0, 0, -1);
         }
     }
 

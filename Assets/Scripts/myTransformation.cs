@@ -17,6 +17,8 @@ public struct TransformationInit
 
 }
 
+
+
 //My transformation component to handle Positon, Rotation and Movement
 public class myTransformation : MonoBehaviour
 {
@@ -68,15 +70,14 @@ public class myTransformation : MonoBehaviour
         RotationInRadians.x = VectorMaths.Deg2Rad(Rotation.x);
         RotationInRadians.y = VectorMaths.Deg2Rad(Rotation.y);
         RotationInRadians.z = VectorMaths.Deg2Rad(Rotation.z);
-        QuatRotation = Quat.EulerToQuat(RotationInRadians);
-        return QuatRotation;
+        Quat Ret = Quat.EulerToQuat(RotationInRadians);
+        return Ret;
     }
 
     // Update is called once per frame
     public void SetRotation(Quat LHS)
     {
         Rotation = Quat.QuatToEuler(LHS);
-
     }
 
     void Update () {
@@ -102,7 +103,7 @@ public class myTransformation : MonoBehaviour
         RotationInRadians.z = VectorMaths.Deg2Rad(Rotation.z);
         QuatRotation = Quat.EulerToQuat(RotationInRadians);
         RotationMatrix = Matrix4B4.QuatToMatrix(QuatRotation);
-        Matrix4B4 M = scaleMatrix * RotationMatrix *translationMatrix;
+        Matrix4B4 M = scaleMatrix * RotationMatrix * translationMatrix;
         for (int i = 0; i < TransformedVertices.Length; i++)
         {
             TransformedVertices[i] = M * ModelSpaceVertices[i];

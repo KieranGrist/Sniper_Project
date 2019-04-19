@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour {
    
 
     public bool Alive = true; //Bool to check if the bullet is still alive 
-     float timeoutDestructor; //Time bullet has been alive 
+   public  float timeoutDestructor; //Time bullet has been alive 
     public  myTransformation Transformation; //Transformation Component
     public MyPhysics Physics; //Physics Component
 
@@ -41,46 +41,30 @@ public class Bullet : MonoBehaviour {
         Transformation.Rotation = Initiate.GunRotation;
 
         //Apply a force in the direction of the gun and times it by the firing speed
-        Physics.Force = VectorMaths.EulerAnglesToDirection(new MyVector3(-Transformation.Rotation.x, Transformation.Rotation.y, 0)) * Initiate.FireSpeed;
-
+        Physics.Force = VectorMaths.EulerAnglesToDirection(new MyVector3(Transformation.Rotation.x, Transformation.Rotation.y, 0)) * Initiate.FireSpeed;
+        Physics.Dynamic = true;
         //Force Bullet to be alive
         Alive = true;
-    }
-
-    public Bullet()
-    {
-        //Get Components
-        Physics = GetComponent<MyPhysics>();
-        Transformation = GetComponent<myTransformation>();
-
-        //Initialise timeout to 0
-        timeoutDestructor = 0;
-
-        //Set alive to false
-        Alive = false;
     }
 
     // Use this for initialization
     void Start()
     {
-        Physics = GetComponent<MyPhysics>();
-        Transformation = GetComponent<myTransformation>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         //Update Components
-        Transformation = GetComponent<myTransformation>();
-        Physics = GetComponent<MyPhysics>();
 
         //Add Delta Time TO timeout Destructor
-          timeoutDestructor += Time.deltaTime;
-
-        //If The bullet has fallen through the level kill the bullet
-        if (Transformation.Translation.y <= 0)
+    //     timeoutDestructor += Time.deltaTime;
+        if (Physics.Collided ==true)
         {
             Alive = false;
         }
+
     }
 }

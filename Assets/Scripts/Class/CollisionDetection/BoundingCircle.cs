@@ -24,8 +24,9 @@ public class BoundingCircle :BoundingObject
 
     public static bool Collide(BoundingCircle circle,BoundingCapsule OtherCapsule)
     {
-        float CombinedRadiusSq = (circle.Radius + OtherCapsule.Radius) * (circle.Radius + OtherCapsule.Radius);
-        return VectorMaths.SqDistanceFromFloat(OtherCapsule.A, OtherCapsule.B, circle.CenterPoint) <= CombinedRadiusSq;
+        float CombinedRadius = circle.Radius + OtherCapsule.Radius;
+        float DistanceFromFloat = Mathf.Sqrt(VectorMaths.SqDistanceFromFloat(OtherCapsule.A, OtherCapsule.B, circle.CenterPoint));
+        return DistanceFromFloat <= CombinedRadius;
     }
     public static bool Collide(BoundingCircle circle, AABB box)
     {
@@ -83,7 +84,6 @@ public class BoundingCircle :BoundingObject
     }
     public static void Resolve(BoundingCircle Circle1, AABB Box1, out MyVector3 Normal, out float Penetration)
     {
- 
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
         Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;
@@ -141,35 +141,61 @@ public class BoundingCircle :BoundingObject
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
 
-        Penetration = VectorMaths.SqDistanceFromFloat(Capsule2.A, Capsule2.B, Circle1.CenterPoint);
-        Capsule2.Half = (Capsule2.B - Capsule2.A) * 0.5f;
-        Capsule2.Center = Capsule2.Half + Capsule2.A;
-          Penetration = Mathf.Sqrt(Penetration);
-        if (Circle1.CenterPoint.x > Capsule2.Center.x)
+        AABB Box1 = new AABB(new MyVector3(Capsule2.A.x, Capsule2.A.y, Capsule2.A.z), new MyVector3(Capsule2.B.x, Capsule2.B.y, Capsule2.B.z));
+        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;
+        Box1.Center = Box1.Half + Box1.MinExtent;
+
+
+        float Radius = Circle1.Radius;
+        Radius *= 0.5f;
+        MyVector3 Extent = new MyVector3(Radius, Radius, Radius);
+        AABB Box2;
+        Box2 = new AABB(Circle1.CenterPoint - Extent, Circle1.CenterPoint + Extent);
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box2.Center = Box2.Half + Box2.MinExtent;
+
+
+        float CurPenetration = (Box1.Half.x + Box2.Half.x) - Mathf.Abs(Box1.Center.x - Box2.Center.x);
+        if (CurPenetration < Penetration)
         {
-            Normal = new MyVector3(1, 0, 0);
+
+            Penetration = CurPenetration;
+            if (Box1.Center.x > Box2.Center.x)
+            {
+                Normal = new MyVector3(-1, 0, 0);
+            }
+
+            if (Box1.Center.x < Box2.Center.x)
+            {
+                Normal = new MyVector3(1, 0, 0);
+            }
+        }
+        CurPenetration = (Box1.Half.y + Box2.Half.y) - Mathf.Abs(Box1.Center.y - Box2.Center.y);
+
+        if (CurPenetration < Penetration)
+        {
+            Penetration = CurPenetration;
+            if (Box1.Center.y > Box2.Center.y)
+                Normal = new MyVector3(0, -1, 0);
+            if (Box1.Center.y < Box2.Center.y)
+                Normal = new MyVector3(0, 1, 0);
         }
 
-        if (Circle1.CenterPoint.x < Capsule2.Center.x)
-        {
+        CurPenetration = (Box1.Half.z + Box2.Half.z) - Mathf.Abs(Box1.Center.z - Box2.Center.z);
 
-            Normal = new MyVector3(-1, 0, 0);
+        if (CurPenetration < Penetration)
+        {
+            Penetration = CurPenetration;
+            if (Box1.Center.z > Box2.Center.z)
+                Normal = new MyVector3(0, 0, -1);
+            if (Box1.Center.z < Box2.Center.z)
+                Normal = new MyVector3(0, 0, 1);
         }
 
-    
-       // Penetration *= 0.001f;
-    
-
-        if (Circle1.CenterPoint.y > Capsule2.Center.y)
-            Normal = new MyVector3(0, 1, 0);
-        if (Circle1.CenterPoint.y < Capsule2.Center.y)
-            Normal = new MyVector3(0, -1, 0);
+        Penetration *= 0.001f;
 
 
-        if (Circle1.CenterPoint.z > Capsule2.Center.z)
-            Normal = new MyVector3(0, 0, 1);
-        if (Circle1.CenterPoint.z < Capsule2.Center.z)
-            Normal = new MyVector3(0, 0, -1);
+
     }
 
     public override void CollisionResolution(BoundingObject RHS, out MyVector3 Norm, out float Penetration)

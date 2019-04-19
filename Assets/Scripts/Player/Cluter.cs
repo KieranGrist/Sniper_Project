@@ -11,8 +11,8 @@ public class Cluter : MonoBehaviour {
      MyVector3 NormalisedVector = new MyVector3(0, 0, 0);
      MyVector3 OriginLast;
      float radius;
- public int CluterAmmount =500;
-    int CluterAmmountLast =0;
+ public float CluterAmmount =500;
+    float CluterAmmountLast =0;
     float DistanceToRadius =0;
     void Start () {
 		
@@ -65,21 +65,29 @@ public class Cluter : MonoBehaviour {
                 physicsInit.Dynamic = true;
                 physicsInit.Mass = Random.Range(1.0f, 100.0f);
                 go.AddComponent<myTransformation>();
+
+                float X, Y, Z;
+                X = Random.Range(1, 10);
+                Y = Random.Range(1, 10);
+                Z = Random.Range(1, 10);
                 if (x == 0)
                 {
-                    Temp.Scale = new MyVector3(5, 2, 4);
+                    go.name = "Box " + i;
+                    Temp.Scale = new MyVector3(X, Y, Z);
                     go.AddComponent<BoxUpdater>();
                 }
 
                 if (x ==1)
                 {
-                    Temp.Scale = new MyVector3(1, 5, 1);
-                    go.AddComponent<CapsuleUpdater>();
+                    go.name = "Box " + i;
+                    Temp.Scale = new MyVector3(X, Y, Y);
+                    go.AddComponent<BoxUpdater>();
                 }
                 if (x ==2 )
                 {
-                    Temp.Scale = new MyVector3(1, 1, 1);
-                    go.AddComponent<SphereUpdate>();
+                    go.name = "Sphere " + i;
+                    Temp.Scale = new MyVector3(X, X, X);
+                    go.AddComponent<BoxUpdater>();
                     physicsInit.Bouncy = true;
                     physicsInit.Dynamic = false;
                 }
@@ -89,15 +97,14 @@ public class Cluter : MonoBehaviour {
                 Temp.Translation = VectorMaths.VectorNormalized(Temp.Translation);
                 Temp.Translation *= radius;
                 Temp.Translation += OriginPoint;
-                Temp.Translation.y = 6;
+                Temp.Translation.y = 16;
                 //RandomVector(radius);
                 Temp.Rotation = new MyVector3();
-             //   go.AddComponent<MyPhysics>();
-
-            //    go.GetComponent<MyPhysics>().Initialise(physicsInit);
+               go.AddComponent<MyPhysics>();
+                go.GetComponent<MyPhysics>().Initialise(physicsInit);
 
                 go.GetComponent<myTransformation>().Initialise(Temp);
-                go.name = "Cluter" + i;
+             
                 Ambient.Add(go);
             }
 

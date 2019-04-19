@@ -38,8 +38,9 @@ public class BoundingCapsule :BoundingObject
     }
     public static bool Collide(BoundingCapsule capsule,BoundingCircle otherCircle)
     {
-        float CombinedRadiusSq = (capsule.Radius + otherCircle.Radius) * (capsule.Radius + otherCircle.Radius);
-        return VectorMaths.SqDistanceFromFloat(capsule.A, capsule.B, otherCircle.CenterPoint) <= CombinedRadiusSq;
+        float CombinedRadius = capsule.Radius + otherCircle.Radius;
+        float DistanceFromFloat = Mathf.Sqrt(VectorMaths.SqDistanceFromFloat(capsule.A, capsule.B, otherCircle.CenterPoint));
+        return DistanceFromFloat <= CombinedRadius;
     }
     public static bool Collide (BoundingCapsule Capsule2, AABB Box1)
     {
@@ -95,10 +96,58 @@ public class BoundingCapsule :BoundingObject
     {
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
+        AABB Box1 = new AABB(new MyVector3(Capsule1.A.x, Capsule1.A.y, Capsule1.A.z), new MyVector3(Capsule1.B.x, Capsule1.B.y, Capsule1.B.z));
+        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;// + Box1.MinExtent;
+        //Get Direction Between the two boxes + edges
+        Box1.Center = Box1.Half + Box1.MinExtent;
+        AABB Box2 = new AABB(new MyVector3(Capsule2.A.x, Capsule2.A.y, Capsule2.A.z), new MyVector3(Capsule2.B.x, Capsule2.B.y, Capsule2.B.z));
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box2.Center = Box2.Half + Box2.MinExtent;
+
+
+
+        float CurPenetration = (Box1.Half.x + Box2.Half.x) - Mathf.Abs(Box1.Center.x - Box2.Center.x);
+        if (CurPenetration < Penetration)
+        {
+
+            Penetration = CurPenetration;
+            if (Box1.Center.x > Box2.Center.x)
+            {
+                Normal = new MyVector3(-1, 0, 0);
+            }
+
+            if (Box1.Center.x < Box2.Center.x)
+            {
+                Normal = new MyVector3(1, 0, 0);
+            }
+        }
+        CurPenetration = (Box1.Half.y + Box2.Half.y) - Mathf.Abs(Box1.Center.y - Box2.Center.y);
+
+        if (CurPenetration < Penetration)
+        {
+            Penetration = CurPenetration;
+            if (Box1.Center.y > Box2.Center.y)
+                Normal = new MyVector3(0, -1, 0);
+            if (Box1.Center.y < Box2.Center.y)
+                Normal = new MyVector3(0, 1, 0);
+        }
+
+        CurPenetration = (Box1.Half.z + Box2.Half.z) - Mathf.Abs(Box1.Center.z - Box2.Center.z);
+
+        if (CurPenetration < Penetration)
+        {
+            Penetration = CurPenetration;
+            if (Box1.Center.z > Box2.Center.z)
+                Normal = new MyVector3(0, 0, -1);
+            if (Box1.Center.z < Box2.Center.z)
+                Normal = new MyVector3(0, 0, 1);
+        }
+        Penetration *= 0.001f;
     }
 
     public static void Resolve(BoundingCapsule Capsule2, AABB Box1, out MyVector3 Normal, out float Penetration)
     {
+    
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
 
@@ -154,35 +203,60 @@ public class BoundingCapsule :BoundingObject
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
 
-        Penetration = VectorMaths.SqDistanceFromFloat(Capsule2.A, Capsule2.B, Circle1.CenterPoint);
-        Capsule2.Half = (Capsule2.B - Capsule2.A) * 0.5f;
-        Capsule2.Center = Capsule2.Half + Capsule2.A;
-         Penetration = Mathf.Sqrt(Penetration);
-        if (Circle1.CenterPoint.x > Capsule2.Center.x)
+        AABB Box1 = new AABB(new MyVector3(Capsule2.A.x, Capsule2.A.y, Capsule2.A.z), new MyVector3(Capsule2.B.x, Capsule2.B.y, Capsule2.B.z));
+        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;
+        Box1.Center = Box1.Half + Box1.MinExtent;
+
+  
+        float Radius = Circle1.Radius;
+        Radius *= 0.5f;
+        MyVector3 Extent = new MyVector3(Radius, Radius, Radius);
+        AABB Box2;
+        Box2 = new AABB(Circle1.CenterPoint - Extent, Circle1.CenterPoint + Extent);
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box2.Center = Box2.Half + Box2.MinExtent;
+
+
+        float CurPenetration = (Box1.Half.x + Box2.Half.x) - Mathf.Abs(Box1.Center.x - Box2.Center.x);
+        if (CurPenetration < Penetration)
         {
-            Normal = new MyVector3(1, 0, 0);
+
+            Penetration = CurPenetration;
+            if (Box1.Center.x > Box2.Center.x)
+            {
+                Normal = new MyVector3(-1, 0, 0);
+            }
+
+            if (Box1.Center.x < Box2.Center.x)
+            {
+                Normal = new MyVector3(1, 0, 0);
+            }
+        }
+        CurPenetration = (Box1.Half.y + Box2.Half.y) - Mathf.Abs(Box1.Center.y - Box2.Center.y);
+
+        if (CurPenetration < Penetration)
+        {
+            Penetration = CurPenetration;
+            if (Box1.Center.y > Box2.Center.y)
+                Normal = new MyVector3(0, -1, 0);
+            if (Box1.Center.y < Box2.Center.y)
+                Normal = new MyVector3(0, 1, 0);
         }
 
-        if (Circle1.CenterPoint.x < Capsule2.Center.x)
+        CurPenetration = (Box1.Half.z + Box2.Half.z) - Mathf.Abs(Box1.Center.z - Box2.Center.z);
+
+        if (CurPenetration < Penetration)
         {
-
-            Normal = new MyVector3(-1, 0, 0);
+            Penetration = CurPenetration;
+            if (Box1.Center.z > Box2.Center.z)
+                Normal = new MyVector3(0, 0, -1);
+            if (Box1.Center.z < Box2.Center.z)
+                Normal = new MyVector3(0, 0, 1);
         }
+ 
+        Penetration *= 0.001f;
 
 
-    //     Penetration *= 0.001f;
-
-
-        if (Circle1.CenterPoint.y > Capsule2.Center.y)
-            Normal = new MyVector3(0, 1, 0);
-        if (Circle1.CenterPoint.y < Capsule2.Center.y)
-            Normal = new MyVector3(0, -1, 0);
-
-
-        if (Circle1.CenterPoint.z > Capsule2.Center.z)
-            Normal = new MyVector3(0, 0, 1);
-        if (Circle1.CenterPoint.z < Capsule2.Center.z)
-            Normal = new MyVector3(0, 0, -1);
     }
 
     public override void CollisionResolution(BoundingObject RHS, out MyVector3 Norm, out float Penetration)
