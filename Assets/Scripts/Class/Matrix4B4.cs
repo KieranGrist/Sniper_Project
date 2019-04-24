@@ -68,6 +68,21 @@ public class Matrix4B4
         values[3, 3] = 1;
     }
     public float[,] values = new float[4, 4];
+    public Matrix4B4 Transpose
+    {
+        get
+        {
+            for (int i = 0; i < 4; i++)
+                for (int j = i + 1; j < 4; j++)
+                {
+                    float temp = values[i, j];
+                    values[i, j] = values[j, i];
+                    values[j, i] = temp;
+                }
+
+            return this;
+        }
+    }
     public static Vector4 operator *(Matrix4B4 lhs, Vector4 vector)
     {
         vector.w = 1;

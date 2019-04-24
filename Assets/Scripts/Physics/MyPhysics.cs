@@ -71,13 +71,11 @@ void Start()
             Force += Gravity;
             Acceleration = Force / Mass ;
             Velocity += Acceleration / AirResitance * Time.deltaTime;
-
+            torque += VectorMaths.DirectionToEuler(Force);
             Force = new MyVector3(0, 0, 0);
-            //WindVelocity = CurrentGrid.WindVelocity;
-            //AirResitance = CurrentGrid.AirResitance;
-
             AngularAcceleration = torque / Inertia;
             AngularVelocity += AngularAcceleration * Time.fixedDeltaTime;
+            torque = new MyVector3(0, 0, 0);
         }
 
         if (PhysicObjectHandler != null)
@@ -105,16 +103,19 @@ void Start()
         }
         Transformation.Translation += Velocity * Time.deltaTime;
         Velocity /= AirResitance;
+        
+        Quat q = new Quat();
 
-        //Quat q = new Quat();
+        
 
-        //float avMag = (AngularVelocity * Time.fixedDeltaTime).Length();
-        //q.w = Mathf.Cos(avMag / 2);
-        //q.x = Mathf.Sin(avMag / 2) * (AngularVelocity.x * Time.fixedDeltaTime) / avMag;
-        //q.y = Mathf.Sin(avMag / 2) * (AngularVelocity.y * Time.fixedDeltaTime) / avMag;
-        //q.z = Mathf.Sin(avMag / 2) * (AngularVelocity.z * Time.fixedDeltaTime) / avMag;
-        //Quat TargetOrienation = q * Transformation.GetRotation();
-        //Transformation.SetRotation(TargetOrienation);
+        float avMag = (AngularVelocity * Time.fixedDeltaTime).Length();
+        q.w = Mathf.Cos(avMag / 2);
+        q.x = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).x / avMag;
+        q.y = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).y / avMag;
+        q.z = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).z / avMag;
+        Quat TargetOrienation = q * Transformation.GetRotation();
+        Transformation.SetRotation(TargetOrienation);
+        AngularVelocity /= AirResitance;
     }
     // Update is called once per frame
     void Update()

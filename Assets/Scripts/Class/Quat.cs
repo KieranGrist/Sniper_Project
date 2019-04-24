@@ -19,12 +19,19 @@ public class Quat
     }
     public Quat(MyVector3 Axis)
     {
-        x = Axis.x;
-        y = Axis.y;
-        z = Axis.z;
-        w = 1;
+        Quat t =  EulerToQuat(Axis);
+        x = t.x;
+        y = t.y;
+        z = t.z;
+        w = t.z;
     }
-
+    public Quat(float x, float y, float z, float w)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
     public Quat(Vector4 Axis)
     {
         x = Axis.x;
@@ -135,14 +142,6 @@ public class Quat
         y = 0;
         z = 0;
 
-    }
-
-    public Quat(float w, float x, float y, float z)
-    {
-        this.w = w;
-        this.x = x;
-        this.y = y;
-        this.z = z;
     }
 
     //GET AND SET AXIS
@@ -289,7 +288,8 @@ public class Quat
 
     public static MyVector3 QuatToEuler(Quat q1)
     {
-        MyVector3 RET = new MyVector3();
+        //https://www.learnopencv.com/rotation-matrix-to-euler-angles/
+
         if (float.IsNaN(q1.w))
         {
             q1.w = 0;
@@ -310,40 +310,28 @@ public class Quat
         {
             q1.z = 0;
         }
-        float heading, attitude, bank;
-        float sqw = q1.w * q1.w;
-        float sqx = q1.x * q1.x;
-        float sqy = q1.y * q1.y;
-        float sqz = q1.z * q1.z;
-        float unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-        float test = q1.x * q1.y + q1.z * q1.w;
-        if (test > 0.499 * unit)
-        { // singularity at north pole
-            heading = 2 * Mathf.Atan2(q1.x, q1.w);
-            attitude = Mathf.PI / 2;
-            bank = 0;
+        Matrix4B4 m = Matrix4B4.QuatToMatrix(q1);
+    m=    m.Transpose;
+        float sy = Mathf.Sqrt(m.values[0, 0] * m.values[0, 0] +m.values[1, 0] *m.values[1, 0]);
 
-            RET = new MyVector3(bank, heading, attitude);
-            RET *= Mathf.Rad2Deg;
-            return RET;
-        }
-        if (test < -0.499 * unit)
-        { // singularity at south pole
-            heading = -2 * Mathf.Atan2(q1.x, q1.w);
-            attitude = -Mathf.PI / 2;
-            bank = 0;
-            RET = new MyVector3(bank, heading, attitude);
-            RET *= Mathf.Rad2Deg;
-            return RET;
-        }
-        heading = Mathf.Atan2(2 * q1.y * q1.w - 2 * q1.x * q1.z, sqx - sqy - sqz + sqw);
-        attitude = Mathf.Asin(2 * test / unit);
-        bank = Mathf.Atan2(2 * q1.x * q1.w - 2 * q1.y * q1.z, -sqx + sqy - sqz + sqw);
+        bool singular = sy < 1e-6; // If
 
-        RET = new MyVector3(bank, heading, attitude);
+        float x, y, z;
+        if (!singular)
+        {
+            x = Mathf.Atan2(m.values[2, 1],m.values[2, 2]);
+            y = Mathf.Atan2(-m.values[2, 0], sy);
+            z = Mathf.Atan2(m.values[1, 0],m.values[0, 0]);
+        }
+        else
+        {
+            x = Mathf.Atan2(-m.values[1, 2],m.values[1, 1]);
+            y = Mathf.Atan2(-m.values[2, 0], sy);
+            z = 0;
+        }
+        MyVector3 RET = new MyVector3(x,y,z);
         RET *= Mathf.Rad2Deg;
         return RET;
-
     }
     public static Quat EulerToQuat(MyVector3 EulerAngle)
     {
@@ -358,6 +346,7 @@ public class Quat
                 EulerAngle.z = Yaw;
         yaw = z;
                  */
+
         float Roll = EulerAngle.x;
         float Pitch = EulerAngle.y;
         float Yaw = EulerAngle.z;
@@ -370,7 +359,7 @@ public class Quat
         sr = Mathf.Sin(Roll / 2);
         sp = Mathf.Sin(Pitch / 2);
         sy = Mathf.Sin(Yaw / 2);
-        cpcy = cp * cy;
+         cpcy = cp * cy;
         spsy = sp * sy;
         ret.w = cr * cpcy + sr * spsy;
         ret.x = sr * cpcy - cr * spsy;

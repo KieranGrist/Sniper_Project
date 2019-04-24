@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 //Init Structure For Bullet
-struct BulletInit
+public struct BulletInit
 {
-    MyVector3 GunPosition; //Position Of Gun
-    MyVector3 GunRotation; //Rotation Of Gun
-    float FireSpeed; //Speed To fire bullet at
-    float mass; //Weight Of Bullet
+    public MyVector3 GunPosition; //Position Of Gun
+    public MyVector3 GunRotation; //Rotation Of Gun
+    public float FireSpeed; //Speed To fire bullet at
+    public float mass; //Weight Of Bullet
 }
 
 //Class For bullet objects
-class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
 
 
-    bool Alive = true; //Bool to check if the bullet is still alive 
-    float timeoutDestructor; //Time bullet has been alive 
+    public bool Alive = true; //Bool to check if the bullet is still alive 
+    public float timeoutDestructor; //Time bullet has been alive 
     myTransformation Transformation; //Transformation Component
     MyPhysics Physics; //Physics Component
     float timer;
     //Used to Initialise Bullet
-    void Init(BulletInit Initiate)
+    public void Init(BulletInit Initiate)
     {
         //Get Components
         Physics = GetComponent<MyPhysics>();

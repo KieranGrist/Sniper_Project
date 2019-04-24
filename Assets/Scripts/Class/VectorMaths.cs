@@ -74,13 +74,6 @@ public class VectorMaths
 
         MyVector3 RV = new MyVector3
         { 
-            //x = Mathf.Cos(Pitch) * Mathf.Sin(Yaw),
-            //y = Mathf.Sin(Yaw) * Mathf.Cos(Pitch),
-            //z = Mathf.Sin(Yaw)
-
-            //x = Mathf.Cos(EulerAngle.x) * Mathf.Sin(EulerAngle.y),
-            //y = Mathf.Cos(EulerAngle.y) * Mathf.Cos(EulerAngle.x),
-            //z = Mathf.Sin(EulerAngle.x)
 
             z = Mathf.Cos(Yaw) * Mathf.Cos(Pitch),
             y = Mathf.Sin(Pitch),

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿                                                                                                                                                                                                                                                    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,12 +46,12 @@ public class DualTest : MonoBehaviour {
 
         Rotation = GetComponent<myTransformation>().GetRotation();
         TargetOrientation = q * Rotation;
-        myTransformation Temp = new myTransformation();
+        myTransformation Temp = GetComponent<myTransformation>();
         EulerAngle = Quat.QuatToEuler(TargetOrientation);
         Temp.SetRotation(TargetOrientation);
 
         NewRotation = Temp.GetRotation();
         NewEulerAngle = Quat.QuatToEuler(NewRotation);
-
+        GetComponent<myTransformation>().Rotation = new MyVector3(angle);
     }
 }

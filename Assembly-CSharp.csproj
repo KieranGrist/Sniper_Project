@@ -88,9 +88,12 @@
     <Compile Include="Assets\Scripts\Test Scripts\ResolveDebuger.cs" />
     <Compile Include="Assets\Scripts\Test Scripts\Rotation\DefaultQuatToEuler.cs" />
     <Compile Include="Assets\Scripts\Test Scripts\Rotation\DefaultRotationPhysics.cs" />
+    <Compile Include="Assets\Scripts\Test Scripts\Rotation\directiontoeuler.cs" />
     <Compile Include="Assets\Scripts\Test Scripts\Rotation\DualTest.cs" />
+    <Compile Include="Assets\Scripts\Test Scripts\Rotation\GetRotationTest.cs" />
     <Compile Include="Assets\Scripts\Test Scripts\Rotation\Quattoeulertest.cs" />
     <Compile Include="Assets\Scripts\Test Scripts\Rotation\RotationPhysics.cs" />
+    <Compile Include="Assets\Scripts\Test Scripts\Rotation\SetRotation.cs" />
     <Compile Include="Assets\Scripts\UI\ClutterText.cs" />
     <Compile Include="Assets\Scripts\UI\DistanceText.cs" />
     <Compile Include="Assets\Scripts\UI\Focus_Script.cs" />
