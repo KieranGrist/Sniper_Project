@@ -210,12 +210,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ba141152ebae84ab68a79c16c8fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Windslider: {fileID: 0}
   PhysicHandle: []
   Gravity:
     x: 0
-    y: -9.3
+    y: 0
     z: 0
-  Model: {fileID: 1988363713655132, guid: c2643547f1f4dee4c9e04ba438d835db, type: 2}
+  WindVelocity:
+    x: 0
+    y: 0
+    z: 0
+  ChangeTimer: 0
+  AirResitance: 0
+  WindSpeed: 0
 --- !u!1 &869986137
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +444,7 @@ MonoBehaviour:
   Push: 0
   ObjectId: 0
   Inertia: 0
-  Dynamic: 0
+  Dynamic: 1
   Bouncy: 0
   Collided: 0
 --- !u!1 &1526713044
@@ -642,7 +649,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2024632205}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4c0bcc8f7dc6734d9c11147dc5108fc, type: 3}
   m_Name: 
@@ -669,7 +676,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2024632205}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d77f485e99791e541b2071edead37954, type: 3}
   m_Name: 

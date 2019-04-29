@@ -87,7 +87,7 @@ public class Cluter : MonoBehaviour {
                 {
                     go.name = "Sphere " + i;
                     Temp.Scale = new MyVector3(X, X, X);
-                    go.AddComponent<BoxUpdater>();
+                    go.AddComponent<SphereUpdate>();
                     physicsInit.Bouncy = true;
                     physicsInit.Dynamic = false;
                 }

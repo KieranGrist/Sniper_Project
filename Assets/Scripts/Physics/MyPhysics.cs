@@ -9,6 +9,34 @@ public struct PhysicsInit
 }
 public class MyPhysics : MonoBehaviour
 {
+    public MyVector3 GetMomentumAtPoint(MyVector3 point)
+    {
+        MyVector3 momentum = new MyVector3();
+
+        if (AngularVelocity.Length() > 0)
+        {
+            MyVector3 pointVelocity = Velocity + VectorMaths.VectorCrossProduct(AngularVelocity, Transformation.Translation - point);
+            momentum = Mass * pointVelocity;
+        }
+        else
+        {
+            momentum = Mass * Velocity;
+        }
+        return momentum;
+    }
+    public void ImpartMomentum(MyPhysics otherbody, MyVector3 ContactPoint)
+    {
+        MyVector3 otherMomentum = otherbody.GetMomentumAtPoint(ContactPoint);
+        MyVector3 thisMomentum = GetMomentumAtPoint(ContactPoint);
+        MyVector3 SummedMomentum = thisMomentum + otherMomentum;
+
+        ApplyMomentum(SummedMomentum);
+        otherbody.ApplyMomentum(SummedMomentum);
+    }
+    public void ApplyMomentum(MyVector3 momentum)
+    {
+        Velocity += momentum / Mass;
+    }
 
     public void Initialise(PhysicsInit Values)
     {
@@ -70,8 +98,7 @@ void Start()
         {
             Force += Gravity;
             Acceleration = Force / Mass ;
-            Velocity += Acceleration / AirResitance * Time.deltaTime;
-            torque += VectorMaths.DirectionToEuler(Force);
+            Velocity += Acceleration* Time.deltaTime;
             Force = new MyVector3(0, 0, 0);
             AngularAcceleration = torque / Inertia;
             AngularVelocity += AngularAcceleration * Time.fixedDeltaTime;
@@ -83,7 +110,7 @@ void Start()
             {
                 if (ObjectId != PhysicObjectHandler.PhysicHandle[i].ObjectId)
                 {
-                 
+                    MyVector3 ContactPoint;
                     if (Transformation.BoundObject.Intersects(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject))
                     {
                         Collided = true;
@@ -92,12 +119,15 @@ void Start()
                     {
                         Transformation.Translation += Normal * (Push + 0.0000001639f);
                         Velocity =new MyVector3(-Velocity.x,-Velocity.y,-Velocity.z) *0.7f;
+
+
                     }
                     if (Dynamic == true)
                     {
                         Transformation.Translation += Normal * (Push + 0.0000001639f);
                         Velocity = new MyVector3(0, 0, 0);
-                    }
+
+                        }
                 }
             }
         }

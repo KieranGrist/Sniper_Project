@@ -124,12 +124,34 @@ public class AABB :BoundingObject
         }
         return true;
     }
-    public static bool Collide(AABB box, BoundingCircle circle)
+    public static bool Collide(AABB Box1, BoundingCircle circle)
     {
-        box.Half = (box.MaxExtent - box.MinExtent) * 0.5f;
-        box.Center = box.Half + box.MinExtent;
-        MyVector3 VectorToOther = box.Center - circle.CenterPoint;
-        return VectorToOther.Length() <= circle.Radius;
+        float Radius = circle.Radius;
+        Radius *= 0.5f;
+        MyVector3 Extent = new MyVector3(Radius, Radius, Radius);
+        AABB Box2;
+        Box2 = new AABB(circle.CenterPoint - Extent, circle.CenterPoint + Extent);
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box2.Center = Box2.Half + Box2.MinExtent;
+
+
+        if (Mathf.Abs(Box1.Center.x - Box2.Center.x) > (Box1.Half.x + Box2.Half.x))
+        {
+
+            return false;
+
+        }
+
+        if (Mathf.Abs(Box1.Center.y - Box2.Center.y) > (Box1.Half.y + Box2.Half.y))
+        {
+            return false;
+        }
+
+        if (Mathf.Abs(Box1.Center.z - Box2.Center.z) > (Box1.Half.z + Box2.Half.z))
+        {
+            return false;
+        }
+        return true;
     }
 
 

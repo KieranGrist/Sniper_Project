@@ -5,6 +5,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Sniper : MonoBehaviour
 {
+    public bool Explosion;
     MyPhysics physics;
     public Slider ForceSlider;
     public Slider MassSlider;
@@ -39,7 +40,7 @@ public class Sniper : MonoBehaviour
         Temp.FireSpeed = FireSpeed;
         Temp.mass = Mass;
         Temp.GunPosition = Transformation.Translation;
-        Temp.GunPosition.y += 10;
+
         Temp.GunRotation = Transformation.Rotation;
         go.GetComponent<Bullet>().Init(Temp);
         Bullets.Add(go.GetComponent<Bullet>());
@@ -58,6 +59,7 @@ public class Sniper : MonoBehaviour
         RightDirection = VectorMaths.VectorNormalized(RightDirection);
         PITCH += -Input.GetAxis("Mouse Y");
         YAW += Input.GetAxis("Mouse X");
+        Mathf.Clamp(YAW, -90, 90);
         PITCH = Mathf.Clamp(PITCH, -90, 90);
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {

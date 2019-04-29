@@ -65,7 +65,7 @@ public class TargetSpawn : MonoBehaviour {
                 ResawnTimer = 0;
             }
         }
-        if (ResawnTimer >=5)
+        if (ResawnTimer >=50)
         {
             CreateCube();
             ResawnTimer = -2;

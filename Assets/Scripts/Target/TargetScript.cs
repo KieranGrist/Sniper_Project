@@ -5,7 +5,7 @@ using UnityEngine;
 public class TargetScript : MonoBehaviour {
     
      MyVector3 Target = new MyVector3();
-
+    float timer;
     myTransformation Transformation;
     BoundingObject TarCol;
     float Speed = 1;
@@ -36,6 +36,8 @@ public class TargetScript : MonoBehaviour {
     {
 
         MyPhysics physics = GetComponent<MyPhysics>();
+        timer += Time.deltaTime;
+        if (timer >=3)
         if (physics.Collided == true)
         {
             Alive = false;
@@ -50,7 +52,11 @@ public class TargetScript : MonoBehaviour {
         }
         else
         {
-            if (MyVector3.Length(Target - Transformation.Translation) > 50)
+            if (MyVector3.Length(Target - Transformation.Translation) > 5)
+            {
+                Transformation.Translation = Target;
+            }
+             if (MyVector3.Length(Target - Transformation.Translation) > 50)
             {
                 Speed = 5;
             }

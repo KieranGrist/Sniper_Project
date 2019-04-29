@@ -5,7 +5,21 @@ using UnityEngine;
 
 public class Matrix4B4
 {
-  public static void DebugMyMatrix(Matrix4B4 matrix)
+
+    public Matrix4B4 InvertTR()
+    {
+        Matrix4B4 rv = Identiy;
+
+        for (int i = 0; i < 4; i++)
+            for (int j = i + 1; j < 4; j++)
+            {
+                rv.values[i, j] = values[j, i];
+            }
+        rv.SetColumn(3,-(rv * GetColum(3)));
+                return rv;
+    }
+
+    public static void DebugMyMatrix(Matrix4B4 matrix)
     {
         Vector4 Row0 = matrix.GetRow(0);
         Vector4 Row1 = matrix.GetRow(1);
@@ -160,7 +174,7 @@ lhs.values[3, 2] * rhs.values[1, 3];
         lhs.values[2, 3] * rhs.values[1, 2] +
         lhs.values[3, 3] * rhs.values[1, 3];
 
- 
+
         RET.values[2, 0] =
         lhs.values[0, 0] * rhs.values[2, 0] +
         lhs.values[1, 0] * rhs.values[2, 1] +
@@ -192,17 +206,17 @@ lhs.values[3, 2] * rhs.values[1, 3];
         lhs.values[2, 0] * rhs.values[3, 2] +
         lhs.values[3, 0] * rhs.values[3, 3];
 
-   
 
- 
 
-     
+
+
+
         RET.values[3, 1] =
         lhs.values[0, 1] * rhs.values[3, 0] +
         lhs.values[1, 1] * rhs.values[3, 1] +
         lhs.values[2, 1] * rhs.values[3, 2] +
         lhs.values[3, 1] * rhs.values[3, 3];
-  
+
 
 
 
@@ -212,9 +226,9 @@ lhs.values[3, 2] * rhs.values[1, 3];
         lhs.values[2, 2] * rhs.values[3, 2] +
         lhs.values[3, 2] * rhs.values[3, 3];
 
-   
 
-    
+
+
 
         RET.values[3, 3] =
         lhs.values[0, 3] * rhs.values[3, 0] +
@@ -243,6 +257,16 @@ lhs.values[3, 2] * rhs.values[1, 3];
         rv.values[1, 3] = -values[1, 3];
         rv.values[2, 3] = -values[2, 3];
         return rv;
+    }
+
+    public void SetColumn(int column, Vector4 Value)
+    {
+
+        values[0, column] = Value.x;
+        values[1, column] = Value.y;
+        values[2, column] = Value.z;
+        values[3, column] = Value.w;
+   
     }
     public Vector4 GetRow(int row)
     {

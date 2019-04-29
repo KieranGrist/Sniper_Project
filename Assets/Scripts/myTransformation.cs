@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-class Test : System.Object
-{
-    public float x = 0;
-    public float y = 0;
-    public float z = 0;
-}
-
 public struct TransformationInit
 {
     public MyVector3 Translation;
@@ -29,7 +22,6 @@ public class myTransformation : MonoBehaviour
     public MyVector3 Rotation;
     public MyVector3 Scale;
     public MyVector3 ModelMinExtent, ModelMaxExtent;
-    Matrix4B4 M;
     Quat QuatRotation;
     Matrix4B4 RotationMatrix;
     public void Initialise (TransformationInit Values)
