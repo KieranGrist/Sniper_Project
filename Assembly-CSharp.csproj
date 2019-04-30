@@ -96,6 +96,7 @@
     <Compile Include="Assets\Scripts\UI\ClutterText.cs" />
     <Compile Include="Assets\Scripts\UI\DistanceText.cs" />
     <Compile Include="Assets\Scripts\UI\Focus_Script.cs" />
+    <Compile Include="Assets\Scripts\UI\Forceslider.cs" />
     <Compile Include="Assets\Scripts\UI\ForceText.cs" />
     <Compile Include="Assets\Scripts\UI\MassText.cs" />
     <Compile Include="Assets\Scripts\UI\TargetText.cs" />

@@ -57,7 +57,6 @@ public class MyPhysics : MonoBehaviour
     public MyVector3 AngularAcceleration = new MyVector3(0, 0, 0);
     public MyVector3 AngularVelocity = new MyVector3(0, 0, 0);
     public float Mass = 1.01f;
-    public float AirResitance = 1.01f;
     public float Push = 0.0f;
     public int ObjectId = 0;
     public float Inertia = 1.0f;
@@ -75,9 +74,7 @@ void Start()
         Velocity = new MyVector3(0, 0, 0);
         torque = new MyVector3(0, 0, 0);
         AngularAcceleration = new MyVector3(0, 0, 0);
-        AngularVelocity = new MyVector3(0, 0, 0);
-        Mass = 1.01f;
-        AirResitance = 1.01f;
+     
         Push = 0.0f;
         ObjectId = 0;
         Inertia = 1.0f;
@@ -96,7 +93,7 @@ void Start()
 
         if (Dynamic == true|| Bouncy == true)
         {
-            Force += Gravity;
+            Force += Mass* Gravity;
             Acceleration = Force / Mass ;
             Velocity += Acceleration* Time.deltaTime;
             Force = new MyVector3(0, 0, 0);
@@ -110,7 +107,7 @@ void Start()
             {
                 if (ObjectId != PhysicObjectHandler.PhysicHandle[i].ObjectId)
                 {
-                    MyVector3 ContactPoint;
+
                     if (Transformation.BoundObject.Intersects(PhysicObjectHandler.PhysicHandle[i].Transformation.BoundObject))
                     {
                         Collided = true;
@@ -118,7 +115,7 @@ void Start()
                     if (Bouncy == true)
                     {
                         Transformation.Translation += Normal * (Push + 0.0000001639f);
-                        Velocity =new MyVector3(-Velocity.x,-Velocity.y,-Velocity.z) *0.7f;
+                        Velocity =new MyVector3(-Velocity.x,-Velocity.y,-Velocity.z) *0.9f;
 
 
                     }
@@ -132,7 +129,7 @@ void Start()
             }
         }
         Transformation.Translation += Velocity * Time.deltaTime;
-        Velocity /= AirResitance;
+        Velocity /= 1.01f;
         
         Quat q = new Quat();
 
@@ -145,7 +142,7 @@ void Start()
         q.z = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).z / avMag;
         Quat TargetOrienation = q * Transformation.GetRotation();
         Transformation.SetRotation(TargetOrienation);
-        AngularVelocity /= AirResitance;
+        AngularVelocity /= 1.01f;
     }
     // Update is called once per frame
     void Update()

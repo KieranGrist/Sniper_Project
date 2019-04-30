@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/CollisonDetection.unity
+- path: Assets/Scenes/Project.unity
   isLoaded: 1
   isActive: 1

@@ -18,7 +18,6 @@ public class Bullet : MonoBehaviour
     public float timeoutDestructor; //Time bullet has been alive 
     myTransformation Transformation; //Transformation Component
     public MyPhysics Physics; //Physics Component
-    float timer;
     //Used to Initialise Bullet
     public void Init(BulletInit Initiate)
     {
@@ -51,7 +50,6 @@ public class Bullet : MonoBehaviour
     {
 
         timeoutDestructor = 0;
-        timer = 1;
     }
 
     // Update is called once per frame
@@ -62,6 +60,7 @@ public class Bullet : MonoBehaviour
         Transformation = GetComponent<myTransformation>();
         Physics = GetComponent<MyPhysics>();
         //Update Components
+
         if (sniper.Explosion == true)
             if (Physics.Collided == true)
             { 
@@ -71,7 +70,7 @@ public class Bullet : MonoBehaviour
 
                 ExplosionInit Exp;
                 Exp.ExplosionRadius = 100;
-                Exp.ExplosionStrength = 1000;
+                Exp.ExplosionStrength = Physics.Mass;
                 go.GetComponent<Explosion>().Init(Exp);
 
                 TransformationInit Temp;

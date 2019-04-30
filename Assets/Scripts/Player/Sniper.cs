@@ -15,7 +15,7 @@ public class Sniper : MonoBehaviour
     List<Bullet> Bullets = new List<Bullet>();
     public GameObject BulletModel;
     myTransformation Transformation;
-
+    public MyVector3 GunOffset, GunPosition;
     List<GameObject> BulletHandler = new List<GameObject>();
     MyVector3 ForwardDirection, RightDirection;
     float PITCH, YAW;
@@ -39,7 +39,8 @@ public class Sniper : MonoBehaviour
         BulletInit Temp;
         Temp.FireSpeed = FireSpeed;
         Temp.mass = Mass;
-        Temp.GunPosition = Transformation.Translation;
+        GunPosition = Transformation.Translation + GunOffset;
+        Temp.GunPosition = GunPosition;
 
         Temp.GunRotation = Transformation.Rotation;
         go.GetComponent<Bullet>().Init(Temp);
@@ -57,6 +58,14 @@ public class Sniper : MonoBehaviour
         ForwardDirection = VectorMaths.EulerAnglesToDirection(new MyVector2(PITCH, YAW));
         RightDirection = VectorMaths.VectorCrossProduct(MyVector3.up, ForwardDirection);
         RightDirection = VectorMaths.VectorNormalized(RightDirection);
+
+
+        GunOffset = ForwardDirection * 30;
+        GunOffset.y += 20;
+        GunOffset += RightDirection * 20;
+ GunPosition = Transformation.Translation + GunOffset;
+
+
         PITCH += -Input.GetAxis("Mouse Y");
         YAW += Input.GetAxis("Mouse X");
         Mathf.Clamp(YAW, -90, 90);
@@ -93,7 +102,7 @@ public class Sniper : MonoBehaviour
                 Destroy(BulletHandler[i]);
                 BulletHandler.Remove(BulletHandler[i]);
             }
-            if (Bullets[i].GetComponent<Bullet>().timeoutDestructor >= 30)
+            if (Bullets[i].GetComponent<Bullet>().timeoutDestructor >= 50)
             {
                 Destroy(Bullets[i]);
                 Bullets.Remove(Bullets[i]);
@@ -110,7 +119,7 @@ public class Sniper : MonoBehaviour
                 {
 
                     Fire();
-                    Bolttimer = 0.5f;
+                    Bolttimer = 2;
                 }
             }
        
