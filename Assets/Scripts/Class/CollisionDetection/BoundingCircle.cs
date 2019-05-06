@@ -82,7 +82,6 @@ public class BoundingCircle :BoundingObject
             {
              VectorToOther = Circle1.CenterPoint - Circle2.CenterPoint;
             Penetration = VectorToOther.Length();
-            Debug.Log(Penetration);
             Normal = new MyVector3(-1, 0, 0);
             }
 

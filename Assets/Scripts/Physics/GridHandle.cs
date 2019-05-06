@@ -43,11 +43,10 @@ public class GridHandle : MonoBehaviour
 
 
         Bullet[] Allbullets = FindObjectsOfType<Bullet>();
-
+        WindSpeed = FindObjectOfType<WindSpeedtext>().Windslider.value;
         for (int i =0; i < Allbullets.Length; i++)
-
         {
-            Allbullets[i].Physics.Force += WindSpeed * WindVelocity;
+            Allbullets[i].Physics.Force += (WindSpeed * WindVelocity);// * Allbullets[i].Physics.Mass;
 
         }
 
@@ -56,7 +55,8 @@ public class GridHandle : MonoBehaviour
 
         if (ChangeTimer >= 100)
         {
-            WindSpeed = Random.Range(1, 1000);
+            FindObjectOfType<WindSpeedtext>().Windslider.value = WindSpeed = Random.Range(FindObjectOfType<WindSpeedtext>().Windslider.minValue, FindObjectOfType<WindSpeedtext>().Windslider.maxValue);
+        
             WindVelocity = RandomVector(-1.0f, 1.0f,0, 0, -1.0f, 1.0f);
             WindVelocity.y = 0;
             AirResitance = Random.Range(2, 20);

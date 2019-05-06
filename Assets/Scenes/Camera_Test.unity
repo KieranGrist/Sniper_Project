@@ -211,12 +211,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ba141152ebae84ab68a79c16c8fe1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Windslider: {fileID: 0}
   PhysicHandle: []
   Gravity:
     x: 0
     y: 0
     z: 0
-  Model: {fileID: 1988363713655132, guid: c2643547f1f4dee4c9e04ba438d835db, type: 2}
+  WindVelocity:
+    x: 0
+    y: 0
+    z: 0
+  ChangeTimer: 0
+  AirResitance: 0
+  WindSpeed: 0
 --- !u!114 &837215707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +235,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a605913cc25ba14d814c0b6522b521d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChildObjects: []
   Translation:
+    x: 0
+    y: 0
+    z: 0
+  ChildTranslation:
     x: 0
     y: 0
     z: 0
@@ -236,10 +248,18 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  ChildRotation:
+    x: 0
+    y: 0
+    z: 0
   Scale:
     x: 1
     y: 1
     z: 1
+  ChildScale:
+    x: 0
+    y: 0
+    z: 0
   ModelMinExtent:
     x: 0
     y: 0
@@ -337,13 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c2099f13ff87045a506fa657b29075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BFocus: {fileID: 1803292695}
   SFocus: {fileID: 0}
-  BulletCam: 1
-  Euler:
-    x: 0
-    y: 0
-    z: 0
 --- !u!1 &1552980476
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +369,7 @@ GameObject:
   - component: {fileID: 1552980479}
   - component: {fileID: 1552980478}
   - component: {fileID: 1552980477}
+  - component: {fileID: 1552980481}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -429,6 +444,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -34.673}
+--- !u!114 &1552980481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1552980476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1506104458c28494d8075ba02ae3ccb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deltatime: 0
 --- !u!1 &1803292689
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +591,6 @@ MonoBehaviour:
     y: 0
     z: 0
   Mass: 1.01
-  AirResitance: 1.01
   Push: 0
   ObjectId: 0
   Inertia: 1
@@ -584,7 +610,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Alive: 1
   timeoutDestructor: 0
-  Transformation: {fileID: 0}
   Physics: {fileID: 0}
 --- !u!114 &1803292696
 MonoBehaviour:
@@ -624,7 +649,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a605913cc25ba14d814c0b6522b521d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChildObjects: []
   Translation:
+    x: 0
+    y: 0
+    z: 0
+  ChildTranslation:
     x: 0
     y: 0
     z: 0
@@ -632,10 +662,18 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  ChildRotation:
+    x: 0
+    y: 0
+    z: 0
   Scale:
     x: 1
     y: 1
     z: 1
+  ChildScale:
+    x: 0
+    y: 0
+    z: 0
   ModelMinExtent:
     x: 0
     y: 0

@@ -16,16 +16,16 @@ public struct TransformationInit
 public class myTransformation : MonoBehaviour
 {
     Vector3[] ModelSpaceVertices;
-    List<Vector3[]> ChildModelSpaceVertices = new List<Vector3[]>();
-    public MeshFilter[] ChildObjects;
+    //  List<Vector3[]> ChildModelSpaceVertices = new List<Vector3[]>();
+    //  public MeshFilter[] ChildObjects;
     public BoundingObject BoundObject;
-    public MyVector3 Translation,ChildTranslation;
-    public MyVector3 Rotation,ChildRotation;
-    public MyVector3 Scale,ChildScale;
+    public MyVector3 Translation, ChildTranslation;
+    public MyVector3 Rotation, ChildRotation;
+    public MyVector3 Scale, ChildScale;
     public MyVector3 ModelMinExtent, ModelMaxExtent;
     Quat QuatRotation;
     Matrix4B4 RotationMatrix;
-    public void Initialise (TransformationInit Values)
+    public void Initialise(TransformationInit Values)
     {
         Translation = Values.Translation;
         Rotation = Values.Rotation;
@@ -34,15 +34,15 @@ public class myTransformation : MonoBehaviour
 
     public myTransformation()
     {
-        this.Translation = new MyVector3(0,0,0);
+        this.Translation = new MyVector3(0, 0, 0);
         this.Scale = new MyVector3(1, 1, 1);
-        this.Rotation = new MyVector3(0,0,0);
+        this.Rotation = new MyVector3(0, 0, 0);
     }
     public myTransformation(MyVector3 Position, MyVector3 scale, MyVector3 rotation)
     {
         this.Translation = Position;
         this.Scale = scale;
-        this.Rotation=rotation;
+        this.Rotation = rotation;
     }
 
     void Start()
@@ -55,11 +55,11 @@ public class myTransformation : MonoBehaviour
         MeshFilter MF = GetComponent<MeshFilter>();
         ModelSpaceVertices = MF.mesh.vertices;
 
-        ChildModelSpaceVertices = new List<Vector3[]>();
-        if (ChildObjects.Length > 0)
-        foreach (MeshFilter mf in ChildObjects)
-            ChildModelSpaceVertices.Add(mf.mesh.vertices);
-     //   Scale = new MyVector3(1, 1, 1);
+        //   ChildModelSpaceVertices = new List<Vector3[]>();
+        //   if (ChildObjects.Length > 0)
+        //   foreach (MeshFilter mf in ChildObjects)
+        //       ChildModelSpaceVertices.Add(mf.mesh.vertices);
+        ////   Scale = new MyVector3(1, 1, 1);
 
     }
     public Quat GetRotation()
@@ -78,7 +78,8 @@ public class myTransformation : MonoBehaviour
         Rotation = Quat.QuatToEuler(LHS);
     }
 
-    void Update () {
+    void Update()
+    {
         Vector3[] TransformedVertices = new Vector3[ModelSpaceVertices.Length];
         //Scale
         Matrix4B4 scaleMatrix = new Matrix4B4(
@@ -95,7 +96,7 @@ public class myTransformation : MonoBehaviour
         new MyVector3(Translation.x, Translation.y, Translation.z)
         );
         //Rotation
-         MyVector3 RotationInRadians = new MyVector3();
+        MyVector3 RotationInRadians = new MyVector3();
         RotationInRadians.x = VectorMaths.Deg2Rad(Rotation.x);
         RotationInRadians.y = VectorMaths.Deg2Rad(Rotation.y);
         RotationInRadians.z = VectorMaths.Deg2Rad(Rotation.z);
@@ -107,10 +108,10 @@ public class myTransformation : MonoBehaviour
             TransformedVertices[i] = M * ModelSpaceVertices[i];
         }
 
- 
-        for (int i =0; i < ModelSpaceVertices.Length; i++)
+
+        for (int i = 0; i < ModelSpaceVertices.Length; i++)
         {
-            if (ModelSpaceVertices[i].x <ModelMinExtent.x)
+            if (ModelSpaceVertices[i].x < ModelMinExtent.x)
             {
                 ModelMinExtent.x = ModelSpaceVertices[i].x;
             }
@@ -137,50 +138,48 @@ public class myTransformation : MonoBehaviour
                 ModelMaxExtent.z = ModelSpaceVertices[i].z;
             }
         }
-       
+
         MeshFilter MF = GetComponent<MeshFilter>();
         MF.mesh.vertices = TransformedVertices;
         MF.mesh.RecalculateNormals();
         MF.mesh.RecalculateBounds();
 
-        if(ChildModelSpaceVertices.Count >0)
-        for (int j = 0; j < ChildModelSpaceVertices.Count; j++)
-        {
-            Vector3[] TransformedChildVertices = new Vector3[ChildModelSpaceVertices[j].Length];
-            for (int i = 0; i < TransformedChildVertices.Length; i++)
-            {
-                Vector4 vertex = ChildModelSpaceVertices[j][i];
-                vertex.w = 1;
-                Matrix4B4 CscaleMatrix = new Matrix4B4(
-    new MyVector3(ChildScale.x, 0, 0),
-    new MyVector3(0, ChildScale.y, 0),
-    new MyVector3(0, 0, ChildScale.z),
-    MyVector3.zero
-    );
-                //Translation
-                Matrix4B4 CtranslationMatrix = new Matrix4B4(
-                new MyVector3(1, 0, 0),
-                new MyVector3(0, 1, 0),
-                new MyVector3(0, 0, 1),
-                new MyVector3(ChildTranslation.x, ChildTranslation.y, ChildTranslation.z)
-                );
-                //Rotation
-                RotationInRadians = new MyVector3();
-                RotationInRadians.x = VectorMaths.Deg2Rad(ChildRotation.x);
-                RotationInRadians.y = VectorMaths.Deg2Rad(ChildRotation.y);
-                RotationInRadians.z = VectorMaths.Deg2Rad(ChildRotation.z);
-                QuatRotation = Quat.EulerToQuat(RotationInRadians);
-                Matrix4B4 CRotationMatrix = Matrix4B4.QuatToMatrix(QuatRotation);
-                Matrix4B4 ChildMatrix = CscaleMatrix * CRotationMatrix * CtranslationMatrix;
+        //    if(ChildModelSpaceVertices.Count >0)
+        //    for (int j = 0; j < ChildModelSpaceVertices.Count; j++)
+        //    {
+        //        Vector3[] TransformedChildVertices = new Vector3[ChildModelSpaceVertices[j].Length];
+        //        for (int i = 0; i < TransformedChildVertices.Length; i++)
+        //        {
+        //            Vector4 vertex = ChildModelSpaceVertices[j][i];
+        //            vertex.w = 1;
+        //            Matrix4B4 CscaleMatrix = new Matrix4B4(
+        //new MyVector3(ChildScale.x, 0, 0),
+        //new MyVector3(0, ChildScale.y, 0),
+        //new MyVector3(0, 0, ChildScale.z),
+        //MyVector3.zero
+        //);
+        //            //Translation
+        //            Matrix4B4 CtranslationMatrix = new Matrix4B4(
+        //            new MyVector3(1, 0, 0),
+        //            new MyVector3(0, 1, 0),
+        //            new MyVector3(0, 0, 1),
+        //            new MyVector3(ChildTranslation.x, ChildTranslation.y, ChildTranslation.z)
+        //            );
+        //            //Rotation
+        //            RotationInRadians = new MyVector3();
+        //            RotationInRadians.x = VectorMaths.Deg2Rad(ChildRotation.x);
+        //            RotationInRadians.y = VectorMaths.Deg2Rad(ChildRotation.y);
+        //            RotationInRadians.z = VectorMaths.Deg2Rad(ChildRotation.z);
+        //            QuatRotation = Quat.EulerToQuat(RotationInRadians);
+        //            Matrix4B4 CRotationMatrix = Matrix4B4.QuatToMatrix(QuatRotation);
+        //            Matrix4B4 ChildMatrix = CscaleMatrix * CRotationMatrix * CtranslationMatrix;
 
 
 
-                TransformedChildVertices[i] = M * ChildMatrix * vertex;
-            }
-            ChildObjects[j].mesh.vertices = TransformedChildVertices;
-            ChildObjects[j].mesh.RecalculateNormals();
-            ChildObjects[j].mesh.RecalculateBounds();
-        }
-
+        //            TransformedChildVertices[i] = M * ChildMatrix * vertex;
+        //        }
+        //        ChildObjects[j].mesh.vertices = TransformedChildVertices;
+        //        ChildObjects[j].mesh.RecalculateNormals();
+        //        ChildObjects[j].mesh.RecalculateBounds();
     }
 }

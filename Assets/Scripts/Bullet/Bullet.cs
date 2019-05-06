@@ -62,23 +62,22 @@ public class Bullet : MonoBehaviour
         //Update Components
 
         if (sniper.Explosion == true)
+        {
             if (Physics.Collided == true)
-            { 
+            {
+
                 GameObject go = new GameObject("Explosion");
                 go.AddComponent<Explosion>();
                 go.AddComponent<myTransformation>();
-
-                ExplosionInit Exp;
-                Exp.ExplosionRadius = 100;
-                Exp.ExplosionStrength = Physics.Mass;
-                go.GetComponent<Explosion>().Init(Exp);
 
                 TransformationInit Temp;
                 Temp.Translation = this.Transformation.Translation;
                 Temp.Scale = this.Transformation.Scale;
                 Temp.Rotation = this.Transformation.Rotation;
                 go.GetComponent<myTransformation>().Initialise(Temp);
+                timeoutDestructor = 10000;
             }
+        }
         //Add Delta Time TO timeout Destructor
         timeoutDestructor += Time.deltaTime;
     }

@@ -6,8 +6,8 @@ public class ClutterText : MonoBehaviour {
     public Slider Cslider;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        Cslider.value = Random.Range(Cslider.minValue, Cslider.maxValue);
+    }
 	
 	// Update is called once per frame
 	void Update () {

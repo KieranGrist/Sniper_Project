@@ -56,8 +56,10 @@ public class MyPhysics : MonoBehaviour
     public MyVector3 torque = new MyVector3(0, 0, 0);
     public MyVector3 AngularAcceleration = new MyVector3(0, 0, 0);
     public MyVector3 AngularVelocity = new MyVector3(0, 0, 0);
+    public MyVector3 WeightForce;
     public float Mass = 1.01f;
     public float Push = 0.0f;
+    public float BounceAmmount;
     public int ObjectId = 0;
     public float Inertia = 1.0f;
     public bool Dynamic = false;
@@ -93,9 +95,16 @@ void Start()
 
         if (Dynamic == true|| Bouncy == true)
         {
-            Force += Mass* Gravity;
-            Acceleration = Force / Mass ;
-            Velocity += Acceleration* Time.deltaTime;
+            WeightForce = Force + (Gravity * Mass);
+            //Acceleration = (WeightForce * Time.deltaTime);
+            BounceAmmount = Mass * Time.deltaTime;
+            //Velocity += Acceleration* Time.deltaTime;
+            Force += Gravity * Mass;
+            Acceleration = Force / Mass;
+            
+  
+            Velocity += Acceleration * Time.fixedDeltaTime;
+     //       torque += VectorMaths.DirectionToEuler(Velocity);
             Force = new MyVector3(0, 0, 0);
             AngularAcceleration = torque / Inertia;
             AngularVelocity += AngularAcceleration * Time.fixedDeltaTime;
@@ -115,7 +124,8 @@ void Start()
                     if (Bouncy == true)
                     {
                         Transformation.Translation += Normal * (Push + 0.0000001639f);
-                        Velocity =new MyVector3(-Velocity.x,-Velocity.y,-Velocity.z) *0.9f;
+
+                            Velocity = new MyVector3(-Velocity.x, -Velocity.y, -Velocity.z) * 0.9f;
 
 
                     }

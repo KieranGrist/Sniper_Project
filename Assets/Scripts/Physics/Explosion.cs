@@ -7,7 +7,8 @@ public struct ExplosionInit
     public float ExplosionRadius;
     public float ExplosionStrength;
 }
-public class Explosion : MonoBehaviour {
+public class Explosion : MonoBehaviour
+{
     BoundingObject ExplosionBounds;
     public float ExplosionRadius = 5.0f;
     public float ExplosionStrength = 200.0f;
@@ -22,21 +23,24 @@ public class Explosion : MonoBehaviour {
     public MyVector3 ImpactPoint;
     float timer;
     // Use this for initialization
-    void Start () {
-
-}
-
-
-   public void Init (ExplosionInit Values)
+    void Start()
     {
-this.ExplosionRadius = Values.ExplosionRadius;
-this.ExplosionStrength = Values.ExplosionStrength;
-}
-    void FixedUpdate() {
 
+    }
+
+
+    public void Init(ExplosionInit Values)
+    {
+        this.ExplosionRadius = Values.ExplosionRadius;
+        this.ExplosionStrength = Values.ExplosionStrength;
+    }
+    void FixedUpdate()
+    {
+        ExplosionStrength = FindObjectOfType<ExplosionStrengthText>().slider.value;
+        ExplosionRadius = FindObjectOfType<ExplosionRadiusText>().slider.value;
         //THIS IS HOW YOU DO GRAVITY BUT OPPOSITE HAS THIS REPELS THE OBJECTS
         ExplosionBounds = new BoundingCircle(Transformation.Translation, ExplosionRadius);
-          Transformation = GetComponent<myTransformation>();
+        Transformation = GetComponent<myTransformation>();
         BoundingCircle Bonds = new BoundingCircle(new MyVector3(0, 0, 0), ExplosionRadius);
         Bonds = ExplosionBounds as BoundingCircle;
         Bonds.CenterPoint = Transformation.Translation;
@@ -47,12 +51,12 @@ this.ExplosionStrength = Values.ExplosionStrength;
         {
             if (Bonds.Intersects(Object[i].Transformation.BoundObject))
             {
-    
+
                 float Radius = float.MinValue;
                 if (Object[i].Transformation.BoundObject is AABB)
                 {
                     AABB Box1 = Object[i].Transformation.BoundObject as AABB;
-      
+
                     if (Box1.MaxExtent.x > Radius)
                     {
                         Radius = Box1.MaxExtent.x;
@@ -98,7 +102,7 @@ this.ExplosionStrength = Values.ExplosionStrength;
                 Distance = Object[i].Transformation.Translation - Transformation.Translation;
                 Normalised = VectorMaths.VectorNormalized(Distance);
 
-   
+
 
                 ImpactPoint = Normalised * Radius; //Other Object to Explosion, Normalise this, Multiple it by the radius of the other object;
                 ExplosionTorque = VectorMaths.VectorCrossProduct(ExplosionForce, CentreOfMass - ImpactPoint);
@@ -108,7 +112,10 @@ this.ExplosionStrength = Values.ExplosionStrength;
         }
     }
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
+        ExplosionStrength = FindObjectOfType<ExplosionStrengthText>().slider.value;
+        ExplosionRadius = FindObjectOfType<ExplosionRadiusText>().slider.value;
         timer += Time.deltaTime;
         if (timer >= 0.2f)
         {
@@ -118,5 +125,5 @@ this.ExplosionStrength = Values.ExplosionStrength;
         }
         Transformation = GetComponent<myTransformation>();
 
-	}
+    }
 }
