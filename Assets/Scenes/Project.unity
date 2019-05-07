@@ -3650,13 +3650,13 @@ MonoBehaviour:
     y: 0
     z: 0
   ModelMinExtent:
-    x: 0
-    y: 0
-    z: 0
+    x: -0.5
+    y: 349
+    z: -0.5
   ModelMaxExtent:
-    x: 0
-    y: 0
-    z: 0
+    x: 0.5
+    y: 3151
+    z: 0.5
 --- !u!136 &1739089541
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3753,6 +3753,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  Bolttimer: 0
 --- !u!114 &1739089546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3822,7 +3823,7 @@ MonoBehaviour:
   Push: 0
   BounceAmmount: 0
   ObjectId: 0
-  Inertia: 0
+  Inertia: 1
   Dynamic: 1
   Bouncy: 0
   Collided: 0
@@ -4562,13 +4563,13 @@ MonoBehaviour:
     y: 0
     z: 0
   ModelMinExtent:
-    x: 0
-    y: 0
-    z: 0
+    x: -2.9524499e+34
+    y: -0.5
+    z: -2.9524499e+34
   ModelMaxExtent:
-    x: 0
-    y: 0
-    z: 0
+    x: 2.9524499e+34
+    y: 0.5
+    z: 2.9524499e+34
 --- !u!65 &2036679797
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4689,7 +4690,7 @@ MonoBehaviour:
   Push: 0
   BounceAmmount: 0
   ObjectId: 0
-  Inertia: 0
+  Inertia: 1
   Dynamic: 0
   Bouncy: 0
   Collided: 0

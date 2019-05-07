@@ -51,7 +51,7 @@ public class Explosion : MonoBehaviour
         {
             if (Bonds.Intersects(Object[i].Transformation.BoundObject))
             {
-
+              
                 float Radius = float.MinValue;
                 if (Object[i].Transformation.BoundObject is AABB)
                 {
@@ -95,6 +95,7 @@ public class Explosion : MonoBehaviour
 
 
                 }
+
                 ExplosionForce = VectorMaths.VectorNormalized(Object[i].Transformation.Translation - Transformation.Translation) * ExplosionStrength;
                 Object[i].Force += ExplosionForce;
                 CentreOfMass = Transformation.Translation;
@@ -117,7 +118,7 @@ public class Explosion : MonoBehaviour
         ExplosionStrength = FindObjectOfType<ExplosionStrengthText>().slider.value;
         ExplosionRadius = FindObjectOfType<ExplosionRadiusText>().slider.value;
         timer += Time.deltaTime;
-        if (timer >= 0.2f)
+        if (timer >= 2)
         {
             Destroy(this.gameObject);
             Destroy(this);

@@ -5,35 +5,7 @@ using UnityEngine;
 
 public class Matrix4B4
 {
-
-    public Matrix4B4 InvertTR()
-    {
-        Matrix4B4 rv = Identiy;
-
-        for (int i = 0; i < 4; i++)
-            for (int j = i + 1; j < 4; j++)
-            {
-                rv.values[i, j] = values[j, i];
-            }
-        rv.SetColumn(3,-(rv * GetColum(3)));
-                return rv;
-    }
-
-    public static void DebugMyMatrix(Matrix4B4 matrix)
-    {
-        Vector4 Row0 = matrix.GetRow(0);
-        Vector4 Row1 = matrix.GetRow(1);
-        Vector4 Row2 = matrix.GetRow(2);
-        Vector4 Row3 = matrix.GetRow(3);
-        Debug.Log("Row 0");
-        Debug.Log(Row0);
-        Debug.Log("Row 1");
-        Debug.Log(Row1);
-        Debug.Log("Row 2");
-        Debug.Log(Row2);
-        Debug.Log("Row 3");
-        Debug.Log(Row3);
-    }
+    public float[,] values = new float[4, 4];
     public Matrix4B4(Vector4 column1, Vector4 column2, Vector4 column3, Vector4 column4)
     {
         values = new float[4, 4];
@@ -81,22 +53,25 @@ public class Matrix4B4
         values[2, 3] = column4.z;
         values[3, 3] = 1;
     }
-    public float[,] values = new float[4, 4];
-    public Matrix4B4 Transpose
-    {
-        get
-        {
-            for (int i = 0; i < 4; i++)
-                for (int j = i + 1; j < 4; j++)
-                {
-                    float temp = values[i, j];
-                    values[i, j] = values[j, i];
-                    values[j, i] = temp;
-                }
 
-            return this;
-        }
+    public static void DebugMyMatrix(Matrix4B4 matrix)
+    {
+        Vector4 Row0 = matrix.GetRow(0);
+        Vector4 Row1 = matrix.GetRow(1);
+        Vector4 Row2 = matrix.GetRow(2);
+        Vector4 Row3 = matrix.GetRow(3);
+        Debug.Log("Row 0");
+        Debug.Log(Row0);
+        Debug.Log("Row 1");
+        Debug.Log(Row1);
+        Debug.Log("Row 2");
+        Debug.Log(Row2);
+        Debug.Log("Row 3");
+        Debug.Log(Row3);
     }
+
+
+
     public static Vector4 operator *(Matrix4B4 lhs, Vector4 vector)
     {
         vector.w = 1;
@@ -250,15 +225,33 @@ lhs.values[3, 2] * rhs.values[1, 3];
                    );
         }
     }
-    public Matrix4B4 TranslationInverse()
+    public Matrix4B4 Transpose
+    {
+        get
+        {
+            for (int i = 0; i < 4; i++)
+                for (int j = i + 1; j < 4; j++)
+                {
+                    float temp = values[i, j];
+                    values[i, j] = values[j, i];
+                    values[j, i] = temp;
+                }
+
+            return this;
+        }
+    }
+    public Matrix4B4 InvertTR()
     {
         Matrix4B4 rv = Identiy;
-        rv.values[0, 3] = -values[0, 3];
-        rv.values[1, 3] = -values[1, 3];
-        rv.values[2, 3] = -values[2, 3];
+
+        for (int i = 0; i < 4; i++)
+            for (int j = i + 1; j < 4; j++)
+            {
+                rv.values[i, j] = values[j, i];
+            }
+        rv.SetColumn(3, -(rv * GetColum(3)));
         return rv;
     }
-
     public void SetColumn(int column, Vector4 Value)
     {
 
@@ -281,6 +274,14 @@ lhs.values[3, 2] * rhs.values[1, 3];
         Vector4 RET;
         RET = new Vector4(values[0, column], values[1, column], values[2, column], values[3, column]);
         return RET;
+    }
+    public Matrix4B4 TranslationInverse()
+    {
+        Matrix4B4 rv = Identiy;
+        rv.values[0, 3] = -values[0, 3];
+        rv.values[1, 3] = -values[1, 3];
+        rv.values[2, 3] = -values[2, 3];
+        return rv;
     }
     public Matrix4B4 RotationInverse()
     {

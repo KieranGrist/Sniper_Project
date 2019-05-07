@@ -19,13 +19,14 @@ public class Sniper : MonoBehaviour
     List<GameObject> BulletHandler = new List<GameObject>();
     MyVector3 ForwardDirection, RightDirection;
     float PITCH, YAW;
-    float Bolttimer;
+    public float Bolttimer;
     void Start()
     {
         FireSpeed = 100;
         Mass = 20;
         ForwardDirection = new MyVector3(0, 0);
         RightDirection = VectorMaths.VectorCrossProduct(MyVector3.up, ForwardDirection);
+        MassSlider.value = Random.Range(MassSlider.minValue, MassSlider.maxValue);
     }
     void Fire()
     {
@@ -46,7 +47,7 @@ public class Sniper : MonoBehaviour
         go.GetComponent<Bullet>().Init(Temp);
         Bullets.Add(go.GetComponent<Bullet>());
         BulletHandler.Add(go);
-
+ 
     }
     void Update()
     {
@@ -62,13 +63,13 @@ public class Sniper : MonoBehaviour
         RightDirection = VectorMaths.VectorCrossProduct(MyVector3.up, ForwardDirection);
         RightDirection = VectorMaths.VectorNormalized(RightDirection);
 
-        if (Transformation.Translation.y > 1000)
+        if (Transformation.Translation.y > 100)
         {
             physics.Force.y -= 100;
         }
-        GunOffset = ForwardDirection * 30;
-        GunOffset.y += 20;
-        GunOffset += RightDirection * 20;
+
+        GunOffset = RightDirection * 20;
+        GunOffset.y += 2;
  GunPosition = Transformation.Translation + GunOffset;
 
 
@@ -97,7 +98,7 @@ public class Sniper : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.Space))
       {
-            physics.Force += new MyVector3(0, 1, 0) * 1000;
+            physics.Force += new MyVector3(0, 1, 0) * 100;
         }
             Transformation.Rotation = new MyVector3(-PITCH, -YAW, 0);
 
@@ -128,7 +129,7 @@ public class Sniper : MonoBehaviour
                 {
 
                     Fire();
-                    Bolttimer = 2;
+                    Bolttimer = 1;
                 }
             }
        

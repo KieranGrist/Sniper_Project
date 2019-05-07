@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
         timeoutDestructor = 0;
 
         //Set Scale
-        Transformation.Scale = new MyVector3(5.5f, 5.5f, 5.5f);
+        Transformation.Scale = new MyVector3(2,2,2);
 
         //Set Physical Mass
         Physics.Mass = Initiate.mass;
@@ -72,6 +72,7 @@ public class Bullet : MonoBehaviour
 
                 TransformationInit Temp;
                 Temp.Translation = this.Transformation.Translation;
+                Temp.Translation.y -= 20;
                 Temp.Scale = this.Transformation.Scale;
                 Temp.Rotation = this.Transformation.Rotation;
                 go.GetComponent<myTransformation>().Initialise(Temp);
