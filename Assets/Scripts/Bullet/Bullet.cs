@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour
         Transformation = GetComponent<myTransformation>();
         Physics = GetComponent<MyPhysics>();
         //Update Components
-
+       if (timeoutDestructor > 2)
         if (sniper.Explosion == true)
         {
             if (Physics.Collided == true)

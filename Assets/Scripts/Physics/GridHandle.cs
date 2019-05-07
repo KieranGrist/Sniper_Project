@@ -39,6 +39,7 @@ public class GridHandle : MonoBehaviour
             PhysicHandle[x].PhysicObjectHandler = GetComponent<GridHandle>();
             PhysicHandle[x].ObjectId = x;
        //     PhysicHandle[x].AirResitance = AirResitance;
+
         }
 
 

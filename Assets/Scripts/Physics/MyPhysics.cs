@@ -65,6 +65,7 @@ public class MyPhysics : MonoBehaviour
     public bool Dynamic = false;
     public bool Bouncy = false; //Object that has motion and is effected by physics, if false object is static at all times, Bouncy will effect what it does when colliding, Static does not move the object at all
     public bool Collided = false;
+    public bool player;
 // Use this for initialization
 
 
@@ -143,16 +144,19 @@ void Start()
         
         Quat q = new Quat();
 
-        
 
-        float avMag = (AngularVelocity * Time.fixedDeltaTime).Length();
-        q.w = Mathf.Cos(avMag / 2);
-        q.x = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).x / avMag;
-        q.y = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).y / avMag;
-        q.z = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).z / avMag;
-        Quat TargetOrienation = q * Transformation.GetRotation();
-        Transformation.SetRotation(TargetOrienation);
-        AngularVelocity /= 1.01f;
+        if (player == false)
+        {
+            float avMag = (AngularVelocity * Time.fixedDeltaTime).Length();
+            q.w = Mathf.Cos(avMag / 2);
+            q.x = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).x / avMag;
+            q.y = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).y / avMag;
+            q.z = Mathf.Sin(avMag / 2) * (AngularVelocity * Time.fixedDeltaTime).z / avMag;
+            Quat TargetOrienation = q * Transformation.GetRotation();
+
+            Transformation.SetRotation(TargetOrienation);
+            AngularVelocity *= (Time.deltaTime*2) ;
+        }
     }
     // Update is called once per frame
     void Update()

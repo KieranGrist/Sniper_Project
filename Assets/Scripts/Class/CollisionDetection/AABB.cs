@@ -389,7 +389,33 @@ public class AABB :BoundingObject
         }
     }
 
+    public static void ContPoin(AABB LHS,AABB RHS, out MyVector3 Point)
+    {
+        Point = new MyVector3(0, 0, 0);
 
+        if (LHS.MaxExtent.x > RHS.MinExtent.x)
+        {
+            Point.x = LHS.MaxExtent.x - RHS.MinExtent.x;
+        }
+   if(LHS.MaxExtent.x < RHS.MinExtent.x)
+        {
+Point.x = RHS.MaxExtent.x - LHS.MinExtent.x;
+        }
+    }
+
+    public override void ContactPoint(BoundingObject RHS, out MyVector3 Point)
+    {
+        Point = new MyVector3(0, 0, 0);
+        if (RHS is AABB)
+        {
+            AABB Box1 = RHS as AABB;
+            ContPoin(this, Box1,out Point);
+        }
+        if (RHS is BoundingCircle)
+        {
+
+        }
+    }
 
     public override bool Intersects(BoundingObject RHS)
     {

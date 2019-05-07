@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 
-public class BoundingCircle :BoundingObject
+public class BoundingCircle : BoundingObject
 {
     public MyVector3 CenterPoint;
     public MyVector3 Half;
@@ -14,7 +14,7 @@ public class BoundingCircle :BoundingObject
         this.Radius = Radius;
     }
 
-    public static bool Collide(BoundingCircle circle,BoundingCircle otherCircle)
+    public static bool Collide(BoundingCircle circle, BoundingCircle otherCircle)
     {
         MyVector3 VectorToOther = otherCircle.CenterPoint - circle.CenterPoint;
         float CombinedRadiusSq = (otherCircle.Radius + circle.Radius);
@@ -22,7 +22,7 @@ public class BoundingCircle :BoundingObject
         return MyVector3.LengthSquared(VectorToOther) <= CombinedRadiusSq;
     }
 
-    public static bool Collide(BoundingCircle circle,BoundingCapsule OtherCapsule)
+    public static bool Collide(BoundingCircle circle, BoundingCapsule OtherCapsule)
     {
         float CombinedRadius = circle.Radius + OtherCapsule.Radius;
         float DistanceFromFloat = Mathf.Sqrt(VectorMaths.SqDistanceFromFloat(OtherCapsule.A, OtherCapsule.B, circle.CenterPoint));
@@ -58,7 +58,7 @@ public class BoundingCircle :BoundingObject
         return true;
 
     }
-    public static void Resolve (BoundingCircle Circle1, BoundingCircle Circle2,out MyVector3 Normal, out float Penetration)
+    public static void Resolve(BoundingCircle Circle1, BoundingCircle Circle2, out MyVector3 Normal, out float Penetration)
     {
         Normal = new MyVector3(0, 0, 0);
         Penetration = float.MaxValue;
@@ -71,36 +71,36 @@ public class BoundingCircle :BoundingObject
         Penetration = VectorToOther.Length();
 
         if (Circle1.CenterPoint.x > Circle2.CenterPoint.x)
-            {
-             VectorToOther = Circle2.CenterPoint - Circle1.CenterPoint;
-   
+        {
+            VectorToOther = Circle2.CenterPoint - Circle1.CenterPoint;
+
             Penetration = VectorToOther.Length();
             Normal = new MyVector3(1, 0, 0);
-            }
+        }
 
-            if (Circle1.CenterPoint.x < Circle2.CenterPoint.x)
-            {
-             VectorToOther = Circle1.CenterPoint - Circle2.CenterPoint;
+        if (Circle1.CenterPoint.x < Circle2.CenterPoint.x)
+        {
+            VectorToOther = Circle1.CenterPoint - Circle2.CenterPoint;
             Penetration = VectorToOther.Length();
             Normal = new MyVector3(-1, 0, 0);
-            }
+        }
 
 
         Penetration *= 0.001f;
 
 
-     
-            if (Circle1.CenterPoint.y > Circle2.CenterPoint.y)
-                Normal = new MyVector3(0, 1, 0);
-            if (Circle1.CenterPoint.y < Circle2.CenterPoint.y)
-                Normal = new MyVector3(0, -1, 0);
+
+        if (Circle1.CenterPoint.y > Circle2.CenterPoint.y)
+            Normal = new MyVector3(0, 1, 0);
+        if (Circle1.CenterPoint.y < Circle2.CenterPoint.y)
+            Normal = new MyVector3(0, -1, 0);
 
 
-            if (Circle1.CenterPoint.z > Circle2.CenterPoint.z)
-                Normal = new MyVector3(0, 0, 1);
-            if (Circle1.CenterPoint.z < Circle2.CenterPoint.z)
-                Normal = new MyVector3(0, 0, -1);
-        
+        if (Circle1.CenterPoint.z > Circle2.CenterPoint.z)
+            Normal = new MyVector3(0, 0, 1);
+        if (Circle1.CenterPoint.z < Circle2.CenterPoint.z)
+            Normal = new MyVector3(0, 0, -1);
+
 
     }
     public static void Resolve(BoundingCircle Circle1, AABB Box1, out MyVector3 Normal, out float Penetration)
@@ -247,7 +247,7 @@ public class BoundingCircle :BoundingObject
         if (RHS is AABB)
         {
             AABB Box1 = RHS as AABB;
-            return Collide(this,Box1);
+            return Collide(this, Box1);
         }
         if (RHS is BoundingCircle)
         {
@@ -258,8 +258,12 @@ public class BoundingCircle :BoundingObject
         {
             BoundingCapsule Capsule1 = RHS as BoundingCapsule;
             return Collide(this, Capsule1);
-          
+
         }
-        return false;   
+        return false;
+    }
+    public override void ContactPoint(BoundingObject RHS, out MyVector3 Point)
+    {
+        Point = new MyVector3(0, 0, 0);
     }
 }

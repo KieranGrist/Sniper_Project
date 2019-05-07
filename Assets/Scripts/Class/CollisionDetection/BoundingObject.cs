@@ -18,7 +18,7 @@ public abstract class BoundingObject
     {
         return base.GetHashCode();
     }
-  
+    public abstract void ContactPoint(BoundingObject RHS, out MyVector3 Point);
     public abstract void CollisionResolution(BoundingObject RHS, out MyVector3 Norm, out float Penetration);   //For Resoloution I handle them as AABB Objects, this makes working out the penetration easier and less cpu intensive 
     public abstract bool Intersects(BoundingObject RHS);
 

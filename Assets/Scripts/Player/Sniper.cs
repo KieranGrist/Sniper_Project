@@ -51,12 +51,15 @@ public class Sniper : MonoBehaviour
     }
     void Update()
     {
-  
+
+
         FireSpeed = ForceSlider.value;
         Mass = MassSlider.value;
         Transformation = GetComponent<myTransformation>();
+        Transformation.Rotation = new MyVector3(-PITCH, -YAW, 0);
         physics = GetComponent<MyPhysics>();
-             physics.torque = new MyVector3(0, 0, 0);
+        physics.player = true;
+        physics.torque = new MyVector3(0, 0, 0);
         physics.AngularAcceleration = new MyVector3(0, 0, 0);
         physics.AngularVelocity = new MyVector3(0, 0, 0);
         ForwardDirection = VectorMaths.EulerAnglesToDirection(new MyVector2(PITCH, YAW));
@@ -67,9 +70,13 @@ public class Sniper : MonoBehaviour
         {
             physics.Force.y -= 100;
         }
+        if (Transformation.Translation.y > 1000)
+        {
+            physics.Force.y -= 500;
+        }
 
-        GunOffset = RightDirection * 20;
-        GunOffset.y += 2;
+        GunOffset = RightDirection * 2;
+        GunOffset.y += 0;
  GunPosition = Transformation.Translation + GunOffset;
 
 
@@ -134,5 +141,6 @@ public class Sniper : MonoBehaviour
             }
        
         }
+        Transformation.Rotation = new MyVector3(-PITCH, -YAW, 0);
     }
 }
