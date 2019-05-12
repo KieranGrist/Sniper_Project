@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 public class CamLock : MonoBehaviour {
-    public Sniper SFocus;
+    public myTransformation SFocus;
     // Use this for initialization
     void Start() {
    
@@ -14,7 +14,7 @@ public class CamLock : MonoBehaviour {
     void Update() {
         Camera AlphaCam;
         AlphaCam = GetComponent<Camera>();
-        myTransformation Focus = SFocus.GetComponent<myTransformation>();
+        myTransformation Focus = SFocus;
             MyVector3 Camera = new MyVector3(Focus.Rotation.x, Focus.Rotation.y, Focus.Rotation.z);
             MyVector3 CameraInRad = new MyVector3();
             CameraInRad.x = VectorMaths.Deg2Rad(Camera.x);

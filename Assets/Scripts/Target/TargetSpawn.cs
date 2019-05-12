@@ -39,9 +39,9 @@ public class TargetSpawn : MonoBehaviour {
             GameObject go = Instantiate(cube, new Vector3(0, 0, 0), transform.rotation);
             go.name = "Target"+i;
             go.AddComponent<myTransformation>();
-            go.AddComponent<TargetScript>();
-            go.AddComponent<MyPhysics>();
             go.AddComponent<BoxUpdater>();
+            go.AddComponent<MyPhysics>();
+            go.AddComponent<TargetScript>();
             TargetScript target = go.GetComponent<TargetScript>();
             target.TaretSpawner = this;
      
