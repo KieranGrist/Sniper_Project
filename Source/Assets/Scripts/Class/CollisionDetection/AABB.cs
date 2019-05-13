@@ -40,68 +40,68 @@ public class AABB :BoundingObject
     }
 
     //Shortcut Values to get extents of box
-    public float Top
+    public float Top //Return Top of box
     {
         get { return MaxExtent.y; }
     }
-    public float Bottom
+    public float Bottom //Return Bottom of box
     {
         get { return MinExtent.y; }
     }
-    public float Left
+    public float Left //Return Left of box
     {
         get { return MinExtent.x; }
     }
-    public float Right
+    public float Right //Return Right of box
     {
         get { return MaxExtent.x; }
     }
-    public float Front
+    public float Front //Return front of box
     {
         get { return MaxExtent.z; }
     }
-    public float Back
+    public float Back //Return back of box
     {
         get { return MinExtent.z; }
     }
 
     //Collision Detection
-    public static bool Collide(AABB Box1, AABB Box2)
+    public static bool Collide(AABB Box1, AABB Box2) //Collision Detection between boxes
     {
-
-        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;
-        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
+        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f; //Set half extent by subtracting max extent by min extent and halfing the value
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f; //Set half extent by subtracting max extent by min extent and halfing the value
         //Get Direction Between the two boxes + edges
-        Box1.Centre = Box1.Half + Box1.MinExtent;
-        Box2.Centre = Box2.Half + Box2.MinExtent;
+        Box1.Centre = Box1.Half + Box1.MinExtent; //Set the centre by  Adding Half to the min extent 
+        Box2.Centre = Box2.Half + Box2.MinExtent;//Set the centre by  Adding Half to the min extent 
         //Colliding to the Right
 
         //Christer Ericson Formula 
-        if (Mathf.Abs(Box1.Centre.x - Box2.Centre.x) > (Box1.Half.x + Box2.Half.x))
+        if (Mathf.Abs(Box1.Centre.x - Box2.Centre.x) > (Box1.Half.x + Box2.Half.x)) //Gets the abs of Box 1 Centre x - Box 2 Centre x and checks if it is more then Box 1 Half x + Box 2 Half x
         {
 
             return false;
 
         }
 
-        if (Mathf.Abs(Box1.Centre.y - Box2.Centre.y) > (Box1.Half.y + Box2.Half.y))
+        if (Mathf.Abs(Box1.Centre.y - Box2.Centre.y) > (Box1.Half.y + Box2.Half.y)) //Gets the abs of Box 1 Centre y - Box 2 Centre y and checks if it is more then Box 1 Half y + Box 2 Half y
         {
             return false;
         }
 
-        if (Mathf.Abs(Box1.Centre.z - Box2.Centre.z) > (Box1.Half.z + Box2.Half.z))
+        if (Mathf.Abs(Box1.Centre.z - Box2.Centre.z) > (Box1.Half.z + Box2.Half.z))//Gets the abs of Box 1 Centre z - Box 2 Centre z and checks if it is more then Box 1 Half z + Box 2 Half z
         {
             return false;
         }
         return true;
     }
 
-    public static bool Collide(AABB Box1, BoundingCapsule Capsule2)
+    
+    public static bool Collide(AABB Box1, BoundingCapsule Capsule2) //Collision Detection between box and capsule (Not in use)
     {
-        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;// + Box1.MinExtent;
+        Box1.Half = (Box1.MaxExtent - Box1.MinExtent) * 0.5f;//Set half extent by subtracting max extent by min extent and halfing the value
         //Get Direction Between the two boxes + edges
-        Box1.Centre = Box1.Half + Box1.MinExtent;
-        AABB Box2 = new AABB(Capsule2.A, Capsule2.B);
+        Box1.Centre = Box1.Half + Box1.MinExtent; //Set the centre by  Adding Half to the min extent 
+        AABB Box2 = new AABB(Capsule2.A, Capsule2.B); //Creates as new AABB 
         Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
         Box2.Centre = Box2.Half + Box2.MinExtent;
 
@@ -124,30 +124,29 @@ public class AABB :BoundingObject
         }
         return true;
     }
-    public static bool Collide(AABB Box1, BoundingCircle circle)
+    public static bool Collide(AABB Box1, BoundingCircle circle) //Collision detection between box and circle
     {
-        float Radius = circle.Radius;
-        Radius *= 0.5f;
-        MyVector3 Extent = new MyVector3(Radius, Radius, Radius);
-        AABB Box2;
-        Box2 = new AABB(circle.CentrePoint - Extent, circle.CentrePoint + Extent);
-        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f;
-        Box2.Centre = Box2.Half + Box2.MinExtent;
+        float Radius = circle.Radius; //Set temp radius to be circle radius
+        Radius *= 0.5f; //Half it as this is the distance from centre to edge
+        MyVector3 Extent = new MyVector3(Radius, Radius, Radius); //Create vector 3 extent this is used as extents for a new box
+        AABB Box2; //Create Box 2 which is the circle
+        Box2 = new AABB(circle.CentrePoint - Extent, circle.CentrePoint + Extent); //Set box 2 extents, minum extent is circles postion - extent and maxium is circles postion + extent
+        Box2.Half = (Box2.MaxExtent - Box2.MinExtent) * 0.5f; //Set half extent by subtracting max extent by min extent and halfing the value
+        Box2.Centre = Box2.Half + Box2.MinExtent;  //Set the centre by  Adding Half to the min extent 
 
-
-        if (Mathf.Abs(Box1.Centre.x - Box2.Centre.x) > (Box1.Half.x + Box2.Half.x))
+        if (Mathf.Abs(Box1.Centre.x - Box2.Centre.x) > (Box1.Half.x + Box2.Half.x)) //Gets the abs of Box 1 Centre x - Box 2 Centre x and checks if it is more then Box 1 Half x + Box 2 Half x
         {
 
             return false;
 
         }
 
-        if (Mathf.Abs(Box1.Centre.y - Box2.Centre.y) > (Box1.Half.y + Box2.Half.y))
+        if (Mathf.Abs(Box1.Centre.y - Box2.Centre.y) > (Box1.Half.y + Box2.Half.y)) //Gets the abs of Box 1 Centre y - Box 2 Centre y and checks if it is more then Box 1 Half y + Box 2 Half y
         {
             return false;
         }
 
-        if (Mathf.Abs(Box1.Centre.z - Box2.Centre.z) > (Box1.Half.z + Box2.Half.z))
+        if (Mathf.Abs(Box1.Centre.z - Box2.Centre.z) > (Box1.Half.z + Box2.Half.z))//Gets the abs of Box 1 Centre z - Box 2 Centre z and checks if it is more then Box 1 Half z + Box 2 Half z
         {
             return false;
         }
@@ -155,38 +154,39 @@ public class AABB :BoundingObject
     }
 
 
-        public static bool LineIntersection(AABB Box, MyVector3 StartPoint, MyVector3 EndPoint, out MyVector3 intersectionPoint)
+    public static bool LineIntersection(AABB Box, MyVector3 StartPoint, MyVector3 EndPoint, out MyVector3 intersectionPoint) //Line Intersection test 
     {
-        float Lowest = 0.0f;
-        float Highest = 1.0f;
-        intersectionPoint = MyVector3.zero;
-        if (!IntersectingAxis(MyVector3.right, Box, StartPoint, EndPoint, ref Lowest, ref Highest))
-            return false;
-        if (!IntersectingAxis(MyVector3.up, Box, StartPoint, EndPoint, ref Lowest, ref Highest))
-            return false;
-        if (!IntersectingAxis(MyVector3.forward, Box, StartPoint, EndPoint, ref Lowest, ref Highest))
-            return false;
+        float Lowest = 0.0f; //Create Lowest to 0
+        float Highest = 1.0f; //Create Highest to 1
+        intersectionPoint = MyVector3.zero; //Set intersection point to 0
+        if (!IntersectingAxis(MyVector3.right, Box, StartPoint, EndPoint, ref Lowest, ref Highest)) //Call intersection axis function with right axis being the axis the result of this is returned in a bool which is inverted (true to false, false to true)
+            return false; //Return false
+        if (!IntersectingAxis(MyVector3.up, Box, StartPoint, EndPoint, ref Lowest, ref Highest)) //Call intersection axis function with up axis being the axis
+            return false; //Return false
+        if (!IntersectingAxis(MyVector3.forward, Box, StartPoint, EndPoint, ref Lowest, ref Highest)) //Call intersection axis function with forward axis being the axis
+            return false; //Return false
 
-        intersectionPoint = VectorMaths.VecLerp(StartPoint, EndPoint, Lowest);
+        intersectionPoint = VectorMaths.VecLerp(StartPoint, EndPoint, Lowest); //Set the intersection point by lerping between start point and end point with t being 0
         return true;
     }
-    public static bool IntersectingAxis(MyVector3 Axis, AABB Box, MyVector3 StartPoint, MyVector3 EndPoint, ref float Lowest, ref float Highest)
+    public static bool IntersectingAxis(MyVector3 Axis, AABB Box, MyVector3 StartPoint, MyVector3 EndPoint, ref float Lowest, ref float Highest) //Intersecting axis
     {
-        float Minimum = 0.0f, Maxium = 1.0f;
-        if (Axis == MyVector3.right)
+        float Minimum = 0.0f; //Create Minium to 0 
+        float Maxium = 1.0f; //Create Maxium to 1
+        if (Axis == MyVector3.right) //If Axis == right 
         {
-            Minimum = (Box.Left - StartPoint.x) / (EndPoint.x - StartPoint.x);
-            Maxium = (Box.Right - StartPoint.x) / (EndPoint.x - StartPoint.x);
+            Minimum = (Box.Left - StartPoint.x) / (EndPoint.x - StartPoint.x);  //Minum =Box Left - start point x / end point x - start point x
+            Maxium = (Box.Right - StartPoint.x) / (EndPoint.x - StartPoint.x);  //Minum =Box Right - start point x / end point x - start point x
         }
         else if (Axis == MyVector3.up)
         {
-            Minimum = (Box.Bottom - StartPoint.y) / (EndPoint.y - StartPoint.y);
-            Maxium = (Box.Top - StartPoint.y) / (EndPoint.y - StartPoint.y);
+            Minimum = (Box.Bottom - StartPoint.y) / (EndPoint.y - StartPoint.y); //Minum =Box left - start point x / end point x - start point x
+            Maxium = (Box.Top - StartPoint.y) / (EndPoint.y - StartPoint.y); //Minum =Box left - start point x / end point x - start point x
         }
         else if (Axis == MyVector3.forward)
         {
-            Minimum = (Box.Back - StartPoint.z) / (EndPoint.z - StartPoint.z);
-            Maxium = (Box.Front - StartPoint.z) / (EndPoint.z - StartPoint.z);
+            Minimum = (Box.Back - StartPoint.z) / (EndPoint.z - StartPoint.z); //Minum =Box left - start point x / end point x - start point x
+            Maxium = (Box.Front - StartPoint.z) / (EndPoint.z - StartPoint.z); //Minum =Box left - start point x / end point x - start point x
         }
         if (Maxium < Minimum)
         {

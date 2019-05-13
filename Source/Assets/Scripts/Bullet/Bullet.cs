@@ -22,8 +22,8 @@ public class Bullet : MonoBehaviour
     public void Init(BulletInit Initiate)
     {
         //Get Components
-        Physics = GetComponent<MyPhysics>();
-        Transformation = GetComponent<myTransformation>();
+        Physics = GetComponent<MyPhysics>(); //Gets Physics component from object (Makes sure physics is up to date)
+        Transformation = GetComponent<myTransformation>(); //Gets Transformation Component from object (Makes sure transformation is up to date)
 
         //Reset Timeout
         timeoutDestructor = 0;
@@ -48,34 +48,39 @@ public class Bullet : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        timeoutDestructor = 0;
+        timeoutDestructor = 0; //Sets timeout to be 0
     }
 
     // Update is called once per frame
     void Update()
     {
-        Sniper sniper = FindObjectOfType<Sniper>();
-     
-        Transformation = GetComponent<myTransformation>();
-        Physics = GetComponent<MyPhysics>();
-        //Update Components
-       if (timeoutDestructor > 0.2f)
-        if (sniper.Explosion == true)
+        Sniper sniper = FindObjectOfType<Sniper>(); //As there is only one player you can just find the sniper object
+
+        Physics = GetComponent<MyPhysics>(); //Gets Physics component from object (Makes sure physics is up to date)
+        Transformation = GetComponent<myTransformation>(); //Gets Transformation Component from object (Makes sure transformation is up to date)
+
+        //Checks if timer is more then 0.2, this stops explosions being instant
+        if (timeoutDestructor > 0.2f)
         {
-            if (Physics.Collided == true)
+            //Checks if the player is creating an explosion
+            if (sniper.Explosion == true)
             {
+                //If physic object has collided run these scripts
+                if (Physics.Collided == true)
+                {
+                  
+                    GameObject go = new GameObject("Explosion"); //Create a new invisble game object called explosion
+                    go.AddComponent<Explosion>(); //Add Explosion 
+                    go.AddComponent<myTransformation>(); //Add Transformation
 
-                GameObject go = new GameObject("Explosion");
-                go.AddComponent<Explosion>();
-                go.AddComponent<myTransformation>();
-
-                TransformationInit Temp;
-                Temp.Translation = this.Transformation.Translation;
-                Temp.Translation.y -= 20;
-                Temp.Scale = this.Transformation.Scale;
-                Temp.Rotation = this.Transformation.Rotation;
-                go.GetComponent<myTransformation>().Initialise(Temp);
-                timeoutDestructor = 10000;
+                    TransformationInit Temp; //Create an initiation structre for transformation 
+                    Temp.Translation = this.Transformation.Translation; //Set translalation 
+                    Temp.Translation.y -= 20; //Decrease height, this makes the explosion more impactfull
+                    Temp.Scale = this.Transformation.Scale; //Sets scale
+                    Temp.Rotation = this.Transformation.Rotation; //sets rotation
+                    go.GetComponent<myTransformation>().Initialise(Temp); //Sets the transformation to initation structure
+                    timeoutDestructor = 10000; //Kill the bullet
+                }
             }
         }
         //Add Delta Time TO timeout Destructor
