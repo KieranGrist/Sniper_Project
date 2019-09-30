@@ -230,7 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb56d52de5d7a84683e21307d1bab59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1739089545}
 --- !u!114 &154680800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1109,15 +1108,7 @@ MonoBehaviour:
     x: -17
     y: 20.1
     z: 0
-  ChildTranslation:
-    x: 0
-    y: 0
-    z: 0
   Rotation:
-    x: 0
-    y: 0
-    z: 0
-  ChildRotation:
     x: 0
     y: 0
     z: 0
@@ -1125,10 +1116,6 @@ MonoBehaviour:
     x: 1
     y: 1
     z: 1
-  ChildScale:
-    x: 0
-    y: 0
-    z: 0
   ModelMinExtent:
     x: 0
     y: 0
@@ -1148,13 +1135,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf21b902c9d6265469debc23d399bba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 1577014270512546, guid: e8e124e6623ea934eb682b7e7ab63fba, type: 2}
+  cube: {fileID: 1008115458589312, guid: a81e816784626ce45b1030ac5f547510, type: 2}
   Playercontrol: 0
   Transformation: {fileID: 0}
   ForwardDirection:
     x: 0
     y: 0
     z: 0
+  RightDirection:
+    x: 0
+    y: 0
+    z: 0
+  timebetweenobjects: 1.5
   Timer: 0
   PITCH: 0
   YAW: 0
@@ -3750,15 +3742,7 @@ MonoBehaviour:
     x: 0
     y: 50
     z: 0
-  ChildTranslation:
-    x: 0
-    y: 0
-    z: 0
   Rotation:
-    x: 0
-    y: 0
-    z: 0
-  ChildRotation:
     x: 0
     y: 0
     z: 0
@@ -3766,10 +3750,6 @@ MonoBehaviour:
     x: 1
     y: 1
     z: 1
-  ChildScale:
-    x: 0
-    y: 0
-    z: 0
   ModelMinExtent:
     x: -0.5
     y: 349
@@ -4115,6 +4095,7 @@ MonoBehaviour:
   cube: {fileID: 1799475048612930, guid: d6854d7f0a279e248bab57c0a12271c2, type: 2}
   TargetDistance: 150
   TargetMax: 10
+  ResawnTimer: 0
   TargetMaxSlider: {fileID: 967945383}
   TargetDistanceSlider: {fileID: 366639386}
 --- !u!65 &1885141965
@@ -4572,7 +4553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c83bd4563672e8c40baad907507ffad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1739089545}
 --- !u!114 &2000755232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4676,15 +4656,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  ChildTranslation:
-    x: 0
-    y: 0
-    z: 0
   Rotation:
-    x: 0
-    y: 0
-    z: 0
-  ChildRotation:
     x: 0
     y: 0
     z: 0
@@ -4692,10 +4664,6 @@ MonoBehaviour:
     x: 9000000
     y: 1
     z: 9000000
-  ChildScale:
-    x: 0
-    y: 0
-    z: 0
   ModelMinExtent:
     x: -2.9524499e+34
     y: -0.5

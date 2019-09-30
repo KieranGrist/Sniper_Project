@@ -1,20 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine; 
 [System.Serializable]
 public class MyVector2 {
-    public float x;
-    public float y;
+    public float x; 
+    public float y; 
     public float X
     {
         get
         {
-            return x;
+            return x; 
         }
 
         set
         {
-            x = value;
+            x = value; 
         }
     }
 
@@ -22,75 +22,75 @@ public class MyVector2 {
     {
         get
         {
-            return y;
+            return y; 
         }
 
         set
         {
-            y = value;
+            y = value; 
         }
     }
 
     public MyVector2()
     {
-        X = 0;
-        Y = 0;
+        X = 0; 
+        Y = 0; 
     }
     public MyVector2(float x, float y)
     {
-        this.X = x;
-        this.Y = y;
+        this.X = x; 
+        this.Y = y; 
     }
     public static MyVector2 AddVectors(MyVector2 LHS, MyVector2 RHS)
     {
-        MyVector2 rv = new MyVector2(0, 0);
-        rv.X = LHS.X + RHS.X;
-        rv.Y = LHS.Y + RHS.Y;
-        return rv;
+        MyVector2 rv = new MyVector2(0, 0); 
+        rv.X = LHS.X + RHS.X; 
+        rv.Y = LHS.Y + RHS.Y; 
+        return rv; 
     }
 
     public static MyVector2 operator +(MyVector2 LHS, MyVector2 RHS)
     {
-        return AddVectors(LHS, RHS);
+        return AddVectors(LHS, RHS); 
     }
 
 
     public static MyVector2 SubtractVectors(MyVector2 LHS, MyVector2 RHS)
     {
-        MyVector2 RET = new MyVector2();
-        RET.X = LHS.X - RHS.X;
-        RET.Y = LHS.Y - RHS.Y;
-        return RET;
+        MyVector2 RET = new MyVector2(); 
+        RET.X = LHS.X - RHS.X; 
+        RET.Y = LHS.Y - RHS.Y; 
+        return RET; //Create RET 
     }
     public static MyVector2 operator -(MyVector2 LHS, MyVector2 RHS)
     {
-        return SubtractVectors(LHS, RHS);
+        return SubtractVectors(LHS, RHS); 
     }
 
 
     public static MyVector2 MultiplyVectors(MyVector2 LHS, MyVector2 RHS)
     {
-        MyVector2 RET = new MyVector2();
-        RET.X = LHS.X * RHS.X;
-        RET.Y = LHS.Y * RHS.Y;
-        return RET;
+        MyVector2 RET = new MyVector2(); 
+        RET.X = LHS.X * RHS.X; 
+        RET.Y = LHS.Y * RHS.Y; 
+        return RET; //Create RET 
     }
     public static MyVector2 operator *(MyVector2 LHS, MyVector2 RHS)
     {
-        return MultiplyVectors(LHS, RHS);
+        return MultiplyVectors(LHS, RHS); 
     }
 
 
     public static MyVector2 DivideVectors(MyVector2 LHS, MyVector2 RHS)
     {
-        MyVector2 RET = new MyVector2();
-        RET.X = LHS.X / RHS.X;
-        RET.Y = LHS.Y / RHS.Y;
-        return RET;
+        MyVector2 RET = new MyVector2(); 
+        RET.X = LHS.X / RHS.X; 
+        RET.Y = LHS.Y / RHS.Y; 
+        return RET; //Create RET 
     }
     public static MyVector2 operator /(MyVector2 LHS, MyVector2 RHS)
     {
-        return DivideVectors(LHS, RHS);
+        return DivideVectors(LHS, RHS); 
     }
 
 
@@ -98,81 +98,81 @@ public class MyVector2 {
         {
         if (LHS.X != RHS.X||LHS.Y !=RHS.Y)
         {
-            return true;
+            return true; 
         }
-        return false;
+        return false; 
         }
     public static bool operator ==(MyVector2 LHS, MyVector2 RHS)
     {
         if (LHS.X == RHS.X && LHS.Y == RHS.Y)
         {
-            return true;
+            return true; 
         }
-        return false;
+        return false; 
     }
     public static bool operator < (MyVector2 LHS, MyVector2 RHS)
     {
         if (LHS.X < RHS.X || LHS.Y < RHS.Y)
         {
-            return true;
+            return true; 
         }
-        return false;
+        return false; 
     }
 
     public static bool operator >(MyVector2 LHS, MyVector2 RHS)
     {
         if (LHS.X > RHS.X || LHS.Y > RHS.Y)
         {
-            return true;
+            return true; 
         }
-        return false;
+        return false; 
     }
 
     public static bool operator <=(MyVector2 LHS, MyVector2 RHS)
     {
         if (LHS.X <= RHS.X && LHS.Y <= RHS.Y)
         {
-            return true;
+            return true; 
         }
-        return false;
+        return false; 
     }
 
     public static bool operator >=(MyVector2 LHS, MyVector2 RHS)
     {
         if (LHS.X >= RHS.X || LHS.Y >= RHS.Y)
         {
-            return true;
+            return true; 
         }
-        return false;
+        return false; 
     }
 
     public float Length()
     {
-        float rv;
-        rv = Mathf.Sqrt(X * X + Y * Y);
-        return rv;
+        float rv; 
+        rv = Mathf.Sqrt(X * X + Y * Y); 
+        return rv; 
     }
 
     public float VectorLengthSq()
     {
-        float rv;
-        rv = (X * X + Y * Y);
-        return rv;
+        float rv; 
+        rv = (X * X + Y * Y); 
+        return rv; 
     }
 
     public override bool Equals(object obj)
     {
-        var vector = obj as MyVector2;
+        var vector = obj as MyVector2; 
         return vector != null &&
                X == vector.X &&
-               Y == vector.Y;
+               Y == vector.Y; 
     }
 
     public override int GetHashCode()
     {
-        var hashCode = 1502939027;
-        hashCode = hashCode * -1521134295 + X.GetHashCode();
-        hashCode = hashCode * -1521134295 + Y.GetHashCode();
-        return hashCode;
+        var hashCode = 1502939027; 
+        hashCode = hashCode * -1521134295 + X.GetHashCode(); 
+        hashCode = hashCode * -1521134295 + Y.GetHashCode(); 
+        return hashCode; 
     }
 }

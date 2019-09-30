@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine; 
+using UnityEngine.UI; 
 
 public class ExplosionToggle : MonoBehaviour {
 
@@ -12,6 +12,6 @@ public class ExplosionToggle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        FindObjectOfType<Sniper>().Explosion = GetComponent<Toggle>().isOn;	
+        FindObjectOfType<Sniper>().Explosion = GetComponent<Toggle>().isOn; //Set players explosion bool to be toggle button value(True/false)
 	}
 }

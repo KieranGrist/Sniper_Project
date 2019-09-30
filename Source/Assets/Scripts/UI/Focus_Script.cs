@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine; 
+using UnityEngine.UI; 
 [System.Serializable]
 public class Focus_Script : MonoBehaviour {
 
@@ -13,14 +13,14 @@ public class Focus_Script : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-          Canvas UI = GetComponent<Canvas>();
-		if (Input.GetKey(KeyCode.LeftControl))
+          Canvas UI = GetComponent<Canvas>(); //Get the UI canvas 
+		if (Input.GetKey(KeyCode.LeftControl)) //If player is pressing LControl show UI
         {
-            UI.enabled = true;
+            UI.enabled = true; //Show UI
         }
         else
         {
-            UI.enabled = false;
+            UI.enabled = false; //Hide ui
         }
 
     }

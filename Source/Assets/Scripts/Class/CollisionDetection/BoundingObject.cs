@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine; 
 [System.Serializable]
 public abstract class BoundingObject
 {
@@ -11,19 +11,19 @@ public abstract class BoundingObject
 
     public override bool Equals(object obj)
     {
-        return base.Equals(obj);
+        return base.Equals(obj); 
     }
 
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        return base.GetHashCode(); 
     }
-    public abstract void ContactPoint(BoundingObject RHS, out MyVector3 Point);
-    public abstract void CollisionResolution(BoundingObject RHS, out MyVector3 Norm, out float Penetration);   //For Resoloution I handle them as AABB Objects, this makes working out the penetration easier and less cpu intensive 
-    public abstract bool Intersects(BoundingObject RHS);
+    public abstract void ContactPoint(BoundingObject RHS, out MyVector3 Point); 
+    public abstract void CollisionResolution(BoundingObject RHS, out MyVector3 Norm, out float Penetration);    //For Resoloution I handle them as AABB Objects, this makes working out the penetration easier and less cpu intensive 
+    public abstract bool Intersects(BoundingObject RHS); 
 
     public override string ToString()
     {
-        return base.ToString();
+        return base.ToString(); 
     }
 }
